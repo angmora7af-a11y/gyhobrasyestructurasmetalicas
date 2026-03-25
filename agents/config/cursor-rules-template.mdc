@@ -1,0 +1,88 @@
+---
+# CURSOR RULES TEMPLATE
+# Copy this file to .cursor/rules/ and customize placeholders for your project.
+# Rename to something like: agent-protocol.mdc
+#
+description: Agent autonomous protocol — knowledge sources, execution, verification
+alwaysApply: true
+---
+
+# Cursor Agent Autonomous Protocol
+
+> **Template:** Adapt placeholders (`{{...}}`) and sections to your project type before use.
+
+---
+
+## 1. MANDATORY KNOWLEDGE SOURCES
+
+- Before starting, read and internalize:
+  - `{{docs/flow.mmd}}` — main flow or architecture diagram
+  - `{{requirements/}}` or `{{hus/requirements.txt}}` — user stories / requirements
+- If `ARCHITECTURE.md` exists, read it first. If absent, follow the structure implied by your schema or conventions.
+- **Schema compliance:** Strictly adhere to data models defined in `{{db_model.dbml}}` or your domain schema. Do not create fields or relations outside it.
+- **Mocking policy:** For development and testing, use mocks for external services. Create mock objects within the project (e.g. `/api`, `tests/fixtures`, `app/mocks`). Ensure mocks follow interfaces derived from your schema.
+
+---
+
+## 2. AUTONOMY & EXECUTION
+
+- Execute the work plan step-by-step without asking for confirmation.
+- If a terminal command fails, analyze the error, apply a fix, and retry automatically.
+- **Self-correction limit:** If a task remains unresolved after **3 full cycles** of "error → fix → retry", STOP and wait for human intervention.
+
+---
+
+## 3. VERIFICATION ROUTINE
+
+After every significant code change or feature implementation:
+
+1. Run the local startup/test script (e.g. `./start.sh`, `make run`, `npm run dev`, `pytest`).
+2. Ensure the app starts without import or runtime errors.
+3. Run tests if the suite exists (`pytest`, `npm test`, etc.).
+
+---
+
+## 4. ACTIVITY LOGGING
+
+Upon completion of a task or before stopping, update `{{log_ejecucion.txt}}` with:
+
+- **Date/Time:** [Current timestamp]
+- **Subject:** [Brief description of work done]
+- **Status:** [Success | Stopped at Cycle X]
+- **Notes:** [Estimated usage, blockers, or summary]
+
+---
+
+## 5. PROJECT-SPECIFIC CONVENTIONS
+
+<!-- Customize this block for your stack. Examples: -->
+
+### Option A — FastAPI / Python
+- Follow patterns in `template/python_fastapi_agreements.md`: thin routers, fat services, Pydantic schemas, dependency injection.
+- Add new Python deps to `requirements.txt` or `pyproject.toml` and run `pip install -r requirements.txt`.
+- Use type hints on all parameters and return types.
+- Never return DB models directly; use Pydantic response models.
+- Prefer `async def` when using async libraries; `def` for blocking ops.
+
+### Option B — Node / Express
+- Use thin routes, fat services; validate with Zod or similar.
+- Add deps to `package.json` and run `npm install`.
+- Prefer async/await over callbacks.
+
+### Option C — Flutter / Dart
+- Follow BLoC or Riverpod for state; keep widgets focused.
+- Add deps to `pubspec.yaml` and run `flutter pub get`.
+
+### Option D — Custom
+- Describe your framework, folder structure, and conventions here.
+
+---
+
+## Quick customization checklist
+
+| Placeholder | Replace with | Example |
+|-------------|--------------|---------|
+| `{{docs/flow.mmd}}` | Your flow diagram path | `docs/general_flow.mmd` |
+| `{{requirements/}}` | Requirements location | `hus/requirements.txt` |
+| `{{db_model.dbml}}` | Schema / model file | `db/schema.dbml` |
+| `{{log_ejecucion.txt}}` | Log file name | `log_ejecucion.txt` |

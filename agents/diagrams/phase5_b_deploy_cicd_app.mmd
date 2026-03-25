@@ -1,0 +1,72 @@
+sequenceDiagram
+    participant Repo as Repositorio Bitbucket
+    participant Webhook as Webhook (Push / Pull Request)
+    participant CodeMagic as CodeMagic CI/CD
+    participant Config as Variables de Entorno y Certificados
+    participant Notify as Email / Slack / Teams
+    participant BuildSign as Fase de Build & Sign
+    participant PlayConsole as Google Play Console
+    participant AppStore as App Store Connect
+    participant UsersAndroid as Usuarios Finales Android
+    participant UsersiOS as Usuarios Finales iOS
+
+    %% ========== TRIGGER ==========
+    Note over Repo,UsersiOS: CI/CD DESPLIEGUE APPS - TIENDAS (Android / iOS)
+
+    Repo->>Webhook: Push / Pull Request
+    Webhook->>CodeMagic: Dispara pipeline CI/CD
+
+    %% ========== CONFIGURACIÓN Y NOTIFICACIONES ==========
+    Note over CodeMagic,Notify: CONFIGURACIÓN INICIAL Y NOTIFICACIONES
+
+    activate CodeMagic
+    CodeMagic->>Config: 1. Obtener Configuración
+    activate Config
+    Note right of Config: Secrets & Certs:<br/>- Variables de entorno<br/>- Certificados de firma (Android/iOS)<br/>- Keystore / Provisioning profiles<br/>- API keys (Play Console, App Store)
+    Config-->>CodeMagic: Variables y certificados listos
+    deactivate Config
+
+    CodeMagic->>Notify: Notificación de Estado (inicio pipeline)
+    Note right of Notify: Email / Slack / Teams:<br/>Pipeline iniciado
+    deactivate CodeMagic
+
+    %% ========== FASE BUILD & SIGN ==========
+    Note over BuildSign: FASE DE BUILD & SIGN
+
+    CodeMagic->>BuildSign: Ejecutar build y firma
+    activate BuildSign
+    Note right of BuildSign: - Compilar proyecto (Flutter / React Native)<br/>- Firma digital Android (keystore)<br/>- Firma digital iOS (certificados)<br/>- Generar artefactos .aab y .ipa
+    BuildSign-->>CodeMagic: Builds listos
+    deactivate BuildSign
+
+    %% ========== DESPLIEGUE ANDROID ==========
+    Note over PlayConsole,UsersAndroid: DESPLIEGUE ANDROID
+
+    CodeMagic->>PlayConsole: 2. Build Android (.aab)
+    activate PlayConsole
+    Note right of PlayConsole: Google Play Console:<br/>Internal Testing → Producción<br/>- Subida del .aab<br/>- Revisión y publicación
+    PlayConsole->>UsersAndroid: App publicada / disponible
+    deactivate PlayConsole
+    UsersAndroid->>UsersAndroid: Usuarios descargan desde Google Play
+
+    %% ========== DESPLIEGUE iOS ==========
+    Note over AppStore,UsersiOS: DESPLIEGUE iOS
+
+    CodeMagic->>AppStore: 3. Build iOS (.ipa)
+    activate AppStore
+    Note right of AppStore: App Store Connect:<br/>TestFlight → App Store<br/>- Subida del .ipa<br/>- Revisión Apple y publicación
+    AppStore->>UsersiOS: App publicada / disponible
+    deactivate AppStore
+    UsersiOS->>UsersiOS: Usuarios descargan desde App Store
+
+    %% ========== NOTIFICACIÓN FINAL ==========
+    CodeMagic->>Notify: Notificación de Estado (pipeline completado)
+    Note right of Notify: Email / Slack / Teams:<br/>Build y despliegue OK / Fallo
+
+    %% ========== FEEDBACK Y REPORTES ==========
+    Note over Repo: FEEDBACK & REPORTES (retroalimentación al repositorio)
+
+    UsersAndroid-->>Repo: Feedback & Reportes (crash reports, analytics)
+    UsersiOS-->>Repo: Feedback & Reportes (crash reports, analytics)
+    AppStore-->>Repo: Feedback & Reportes (revisión, métricas TestFlight)
+    PlayConsole-->>Repo: Feedback & Reportes (métricas Play Console)

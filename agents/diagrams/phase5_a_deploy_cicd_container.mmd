@@ -1,0 +1,66 @@
+sequenceDiagram
+    box Repositorio .cicd (Bitbucket)
+    participant Repo as Repositorio
+    participant PR as Pull Request
+    participant Webhook as Webhook Bitbucket
+    end
+
+    box Orquestación CI/CD
+    participant Jenkins as Jenkins Pipeline
+    participant JenkinsFile as Jenkinsfile
+    end
+
+    box Infraestructura Nube (AWS)
+    participant IaC as IaC (Terraform/CloudFormation)
+    participant ECR as Container Registry (ECR)
+    participant Instances as Instancias (Docker, Nginx/Apache, Certbot)
+    end
+
+    participant Logs as Stage Logs / Blue Ocean
+
+    %% ========== PREREQUISITOS ==========
+    Note over Repo,Instances: PREREQUISITOS - Alistamiento
+
+    Repo->>Repo: Definición de Dockerfile
+    Note right of Repo: - Dependencias, variables de entorno, puertos<br/>- Comandos estándar (ej: package.json)<br/>- Rama cicd para probar proceso
+    IaC->>Instances: Creación: Instancias o máquinas
+    IaC->>Instances: Alistamiento: Docker, Nginx/Apache, Certbot
+    IaC->>ECR: Container Registry (ECR)
+    Note right of IaC: IaC: Infraestructura como código<br/>- Provisioning automático<br/>- SSH access configurado
+    Jenkins->>Repo: Configuración pipeline + Registro repositorio
+    Jenkins->>Webhook: Conexión webhook Bitbucket
+
+    %% ========== APROBACIÓN PR → TRIGGER ==========
+    Note over PR,Jenkins: APROBACIÓN DE PR - Trigger del pipeline
+
+    PR->>Webhook: Aprobación de PR (versionamiento de rama?)
+    Webhook->>Jenkins: Consume Webhook → Inicia pipeline
+
+    %% ========== JENKINSFILE - PIPELINE ==========
+    Note over JenkinsFile,ECR: JENKINSFILE - Automatización del despliegue
+
+    Jenkins->>JenkinsFile: Ejecutar pipeline
+    activate JenkinsFile
+
+    JenkinsFile->>JenkinsFile: 1. Set de variables
+    JenkinsFile->>JenkinsFile: 2. Preparación de ambiente (validación evento/rama)
+    JenkinsFile->>Repo: 3. Clonar repositorio
+    Repo-->>JenkinsFile: Código fuente
+    JenkinsFile->>JenkinsFile: 4. Manejar variables de entorno
+    JenkinsFile->>JenkinsFile: 5. Construir la imagen (Dockerfile)
+    Note right of JenkinsFile: Build: Docker build<br/>Optimización: cache de capas
+    JenkinsFile->>ECR: 6. Colocar imagen en ECR
+    ECR-->>JenkinsFile: Imagen registrada
+    JenkinsFile->>Instances: 7. Despliegue del servicio o aplicación
+    Note right of JenkinsFile: Deploy: pull image + run container<br/>Rollback automático si falla
+    Instances-->>JenkinsFile: Servicio desplegado
+
+    JenkinsFile->>Logs: Emitir stage logs por cada paso
+    deactivate JenkinsFile
+
+    %% ========== LOGS Y VISIBILIDAD ==========
+    Note over Logs: LOGS - Trazabilidad y optimización
+
+    Logs->>Logs: Stage logs por etapa
+    Note right of Logs: Blue Ocean: visualización<br/>del pipeline y logs
+    Jenkins-->>Repo: Pipeline completo ✓ (build + deploy)

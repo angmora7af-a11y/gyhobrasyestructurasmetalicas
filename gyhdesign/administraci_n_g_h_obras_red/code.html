@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Administration Settings | G&amp;H Obras Industrial Ledger</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&amp;family=Inter:wght@300;400;500;600;700&amp;family=Epilogue:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#5f5e5e",
+              "on-primary": "#ffffff",
+              "primary-container": "#e30613",
+              "primary-fixed": "#ffdad5",
+              "on-primary-fixed": "#410001",
+              "surface-variant": "#e2e2e2",
+              "on-secondary-fixed-variant": "#474746",
+              "surface-container-lowest": "#ffffff",
+              "error": "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "tertiary-container": "#607a00",
+              "surface-container-highest": "#e2e2e2",
+              "outline-variant": "#e9bcb6",
+              "background": "#f9f9f9",
+              "on-error-container": "#93000a",
+              "secondary-container": "#e2dfde",
+              "inverse-primary": "#ffb4aa",
+              "on-tertiary-fixed-variant": "#3c4d00",
+              "surface": "#f9f9f9",
+              "on-error": "#ffffff",
+              "on-surface": "#1a1c1c",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#e8e8e8",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed-dim": "#c8c6c5",
+              "on-tertiary-container": "#ecffb1",
+              "surface-bright": "#f9f9f9",
+              "on-secondary-fixed": "#1c1b1b",
+              "tertiary-fixed": "#c3f400",
+              "on-primary-container": "#fff5f3",
+              "on-background": "#1a1c1c",
+              "secondary-fixed": "#e5e2e1",
+              "inverse-on-surface": "#f1f1f1",
+              "tertiary-fixed-dim": "#abd600",
+              "primary": "#b5000b",
+              "primary-fixed-dim": "#ffb4aa",
+              "outline": "#936e69",
+              "surface-tint": "#c0000c",
+              "on-surface-variant": "#5e3f3b",
+              "surface-container": "#eeeeee",
+              "tertiary": "#4b6000",
+              "surface-container-low": "#f3f3f3",
+              "on-tertiary-fixed": "#161e00",
+              "on-secondary-container": "#636262",
+              "surface-dim": "#dadada",
+              "on-primary-fixed-variant": "#930007",
+              "inverse-surface": "#2f3131"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(249, 249, 249, 0.85);
+            backdrop-filter: blur(20px);
+        }
+        /* Custom scrollbar for data-dense tables */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b5000b;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Sidebar Navigation Shell -->
+<aside class="flex flex-col h-screen fixed left-0 top-0 z-40 bg-stone-900 dark:bg-black w-64 docked">
+<div class="p-8">
+<h1 class="text-xl font-black text-white tracking-tighter uppercase font-headline">G&amp;H Obras</h1>
+<p class="text-[10px] text-stone-500 font-bold uppercase tracking-[0.2em] mt-1">Industrial Ledger</p>
+</div>
+<nav class="flex-1 mt-4">
+<a class="flex items-center text-stone-400 hover:text-stone-100 pl-5 py-3 transition-colors font-['Montserrat'] tracking-tight font-bold uppercase text-xs hover:bg-stone-800/80" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="engineering">engineering</span>
+                Operation
+            </a>
+<a class="flex items-center text-stone-400 hover:text-stone-100 pl-5 py-3 transition-colors font-['Montserrat'] tracking-tight font-bold uppercase text-xs hover:bg-stone-800/80" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="payments">payments</span>
+                Commercial
+            </a>
+<a class="flex items-center text-stone-400 hover:text-stone-100 pl-5 py-3 transition-colors font-['Montserrat'] tracking-tight font-bold uppercase text-xs hover:bg-stone-800/80" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="account_balance">account_balance</span>
+                Finance
+            </a>
+<a class="flex items-center border-l-4 border-red-600 text-red-500 bg-stone-800/50 pl-4 py-3 transition-all font-['Montserrat'] tracking-tight font-bold uppercase text-xs" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="admin_panel_settings">admin_panel_settings</span>
+                Administration
+            </a>
+</nav>
+<div class="mt-auto pb-8">
+<a class="flex items-center text-stone-400 hover:text-stone-100 pl-5 py-3 transition-colors font-['Montserrat'] tracking-tight font-bold uppercase text-xs hover:bg-stone-800/80" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+                Settings
+            </a>
+<a class="flex items-center text-stone-400 hover:text-stone-100 pl-5 py-3 transition-colors font-['Montserrat'] tracking-tight font-bold uppercase text-xs hover:bg-stone-800/80" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<!-- Main Canvas Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-8 py-4 sticky top-0 z-30 bg-stone-50/90 backdrop-blur-md">
+<div class="flex items-center gap-6">
+<div class="relative focus-within:ring-2 focus-within:ring-red-500/20 transition-all">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" data-icon="search">search</span>
+<input class="bg-surface-container-low border-none rounded-none py-2 pl-10 pr-4 text-sm w-80 focus:ring-0 focus:bg-surface-container-highest transition-colors font-body" placeholder="Search system logs or users..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-stone-600 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-stone-600 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-stone-200">
+<img class="h-full w-full object-cover" data-alt="Close-up portrait of a professional industrial manager with a confident expression and sharp focus in a bright corporate environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5H97_wjIopZ3Fy0q7CtdckdFe6vfNfbMR30rjIE2REH6pMvpO1CvhNVLGOQu6MKZFALuenk-Bm8O1b5NQgaIEJjd-adR4re2sdhqBCARJ-WGQMAa4xxzLI_gTD18X_j-cf4TDk5xvUjw2xt_rxrVkch4IYTNFJCYzpd8ea4dNMI5EqXeyBs38JB8D33rlh5eV5K4fGrCiCI8KyLAX-fn426dy8bJKbJo6PbaRWAp0R1dhVBBojR1StD3PKTxFmdzhjndRsxbhrH8t"/>
+</div>
+</div>
+</header>
+<!-- Separation Logic Line (from JSON) -->
+<div class="bg-stone-200 h-[1px] w-full mx-8 max-w-[calc(100%-4rem)]"></div>
+<!-- Content Canvas -->
+<section class="p-8 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="mb-10">
+<h2 class="font-headline font-black text-4xl text-on-surface tracking-tighter uppercase leading-none">Administration</h2>
+<p class="text-on-surface-variant font-medium mt-2 max-w-2xl">Global system configuration, user access control, and audit surveillance for the Industrial Ledger ecosystem.</p>
+</div>
+<!-- Custom Tabs (Asymmetric Layout) -->
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Tab Controls (Vertical/Left) -->
+<nav class="flex flex-col gap-1 w-full lg:w-64 shrink-0">
+<button class="group flex items-center justify-between p-4 bg-surface-container-lowest text-left transition-all border-l-4 border-primary">
+<span class="font-headline font-bold text-xs uppercase tracking-widest text-primary">User Management</span>
+<span class="material-symbols-outlined text-primary" data-icon="group">group</span>
+</button>
+<button class="group flex items-center justify-between p-4 bg-surface-container-low hover:bg-surface-container-high text-left transition-all border-l-4 border-transparent">
+<span class="font-headline font-bold text-xs uppercase tracking-widest text-on-surface-variant group-hover:text-on-surface">Roles &amp; Permissions</span>
+<span class="material-symbols-outlined text-stone-400 group-hover:text-stone-600" data-icon="lock_open">lock_open</span>
+</button>
+<button class="group flex items-center justify-between p-4 bg-surface-container-low hover:bg-surface-container-high text-left transition-all border-l-4 border-transparent">
+<span class="font-headline font-bold text-xs uppercase tracking-widest text-on-surface-variant group-hover:text-on-surface">Tenant Configuration</span>
+<span class="material-symbols-outlined text-stone-400 group-hover:text-stone-600" data-icon="settings_input_component">settings_input_component</span>
+</button>
+<button class="group flex items-center justify-between p-4 bg-surface-container-low hover:bg-surface-container-high text-left transition-all border-l-4 border-transparent">
+<span class="font-headline font-bold text-xs uppercase tracking-widest text-on-surface-variant group-hover:text-on-surface">Audit Logs</span>
+<span class="material-symbols-outlined text-stone-400 group-hover:text-stone-600" data-icon="history_edu">history_edu</span>
+</button>
+</nav>
+<!-- Active Tab Content: User Management -->
+<div class="flex-1 space-y-6">
+<!-- Section Actions -->
+<div class="flex justify-between items-end pb-4">
+<div>
+<h3 class="font-headline font-extrabold text-xl text-on-surface">User Management</h3>
+<p class="text-sm text-on-surface-variant">Manage 24 active system users and their access levels.</p>
+</div>
+<button class="bg-primary hover:bg-primary-container text-white px-6 py-2 flex items-center gap-2 font-headline font-bold text-xs uppercase tracking-widest transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm" data-icon="person_add">person_add</span>
+                            Provision New User
+                        </button>
+</div>
+<!-- Industrial Table -->
+<div class="bg-surface-container-lowest overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="p-4 font-headline text-[10px] uppercase tracking-widest text-secondary font-black">Identity</th>
+<th class="p-4 font-headline text-[10px] uppercase tracking-widest text-secondary font-black">Designation</th>
+<th class="p-4 font-headline text-[10px] uppercase tracking-widest text-secondary font-black">Status</th>
+<th class="p-4 font-headline text-[10px] uppercase tracking-widest text-secondary font-black text-right">Operations</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-stone-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a senior engineering consultant with a focused professional gaze, neutral studio lighting and sharp details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVNEBhMLEzygJq95QeIWLTHlGxm1IT1-mUAsWYiikEJcrgZ_fSyfJaM44pIt4_TWYi0ZamgaQA9dMCbt6yJDzKZRS8UhBaI3a_iNy7-wpTbmpdBCIi1SMJfSJGfbRZwUaJWN4-p84_WgHvTSdhz3DCQfqjbMLbYGkkfyVMC5xwhjbSOoyUQOiodwHmL-QSfuYK7CmAS3YBh5LAsqj-9iPDrSyox_Q29jlvSsiTjRqVhCrPdXRrGuftY4yuLO0fHtHZIZSucXoqV3p3"/>
+</div>
+<div>
+<div class="font-bold text-sm text-on-surface">Alejandro G.</div>
+<div class="text-[11px] text-on-surface-variant font-mono">alejandro.g@ghobras.com</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="text-xs font-headline font-bold text-secondary uppercase tracking-tighter">System Administrator</span>
+</td>
+<td class="p-4">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest">Active</span>
+</td>
+<td class="p-4 text-right">
+<button class="text-secondary hover:text-primary transition-colors p-1"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="text-secondary hover:text-error transition-colors p-1"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</td>
+</tr>
+<tr class="bg-surface-container-low/30 hover:bg-surface-container-low transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-stone-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional woman in business attire looking forward, soft focus warehouse background, high-end corporate photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9hJI4GoE0IeSM-Z-ETUuMpc7x-lFZsUD-DsVdCxfdoIZ90SFCBFKMq1QcF64WzLHQaMdvqWzLtEspgQPyHVPFL3wyi2_Prq9ENZ2zVIdQ4-EZOJmYeWlW70ywYkxfXlB4xPz6QlQ1U4a_2b_rLHlXoQjh9nokwgqvYKbAFkxJzYg4YdsGLPeCr9x-ipCtgDyJ1jV0ctFaOYmPiVDwqJOdd4oR8YGDi2rLUW3s2kI9LTG7asHlwVrmtu4pD8lXrWzk6Me8CON_ytSX"/>
+</div>
+<div>
+<div class="font-bold text-sm text-on-surface">Elena S.</div>
+<div class="text-[11px] text-on-surface-variant font-mono">e.suarez@ghobras.com</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="text-xs font-headline font-bold text-secondary uppercase tracking-tighter">Finance Manager</span>
+</td>
+<td class="p-4">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest">Active</span>
+</td>
+<td class="p-4 text-right">
+<button class="text-secondary hover:text-primary transition-colors p-1"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="text-secondary hover:text-error transition-colors p-1"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-stone-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Male logistics coordinator in a modern office setting, bright natural light, professional and approachable visual style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjrcSSZKTim9U1dQKEQOB3YWWV-Davek8HBNgXzY_-jabhXBQYPjonk_BtfDyh6fx4S0MDX-NOndusurrXBRZP4lAKx2OhWBKvH3mX8tDGWIeKbOVDnzLgveOUfSw24iVAX0Dy2BdPPRXGiyLxaYJ6hBDOhbJfAplKxQdFFehtJbutbl_bjdFlRInZocITntX9IBxlMLsRoueI9vcyrlrVp5HgzrOb9ZSZHUWQiB3_P_SuxmqoxhQVVolwtm6bpOPR_qxF6UiHOPR5"/>
+</div>
+<div>
+<div class="font-bold text-sm text-on-surface">Ricardo M.</div>
+<div class="text-[11px] text-on-surface-variant font-mono">r.mendoza@ghobras.com</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="text-xs font-headline font-bold text-secondary uppercase tracking-tighter">Operations Lead</span>
+</td>
+<td class="p-4">
+<span class="border border-outline text-on-surface-variant px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest">Pending</span>
+</td>
+<td class="p-4 text-right">
+<button class="text-secondary hover:text-primary transition-colors p-1"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="text-secondary hover:text-error transition-colors p-1"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Configuration Grid (Tenant & API) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+<!-- Tenant Card -->
+<div class="bg-surface-container-low p-6 border-t-4 border-primary">
+<h4 class="font-headline font-black text-xs uppercase tracking-[0.2em] text-on-surface mb-6">Tenant Branding</h4>
+<div class="space-y-4">
+<div>
+<label class="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Company Name</label>
+<input class="w-full bg-surface-container-lowest border-none text-sm p-3 focus:ring-0" type="text" value="G&amp;H Obras Industriales"/>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-stone-400" data-icon="image">image</span>
+</div>
+<div class="flex-1">
+<label class="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Brand Identity Logo</label>
+<button class="text-[10px] font-bold uppercase tracking-widest text-primary hover:text-primary-container">Update Asset</button>
+</div>
+</div>
+</div>
+</div>
+<!-- API Configuration Card -->
+<div class="bg-surface-container-low p-6 border-t-4 border-secondary">
+<h4 class="font-headline font-black text-xs uppercase tracking-[0.2em] text-on-surface mb-6">External Integrations</h4>
+<div class="space-y-4">
+<div>
+<label class="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Siigo API Endpoint</label>
+<input class="w-full bg-surface-container-lowest border-none text-sm p-3 font-mono focus:ring-0" type="text" value="https://api.siigo.com/v1/gh-ledger-live"/>
+</div>
+<div>
+<label class="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Service Access Key</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-none text-sm p-3 font-mono focus:ring-0" type="password" value="••••••••••••••••"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 cursor-pointer text-sm" data-icon="visibility">visibility</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Audit Log (Recent Activity Bento Piece) -->
+<div class="mt-12 bg-surface-container-lowest p-6">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline font-black text-xs uppercase tracking-[0.2em] text-on-surface">Recent Audit Trail</h4>
+<a class="text-[10px] font-bold uppercase tracking-widest text-primary hover:underline" href="#">View Full Ledger</a>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4 py-3 border-b border-surface-container-low">
+<span class="material-symbols-outlined text-stone-400" data-icon="history">history</span>
+<div class="flex-1">
+<p class="text-xs text-on-surface"><span class="font-bold">System Admin</span> updated role permissions for <span class="font-bold">Project Manager</span></p>
+<p class="text-[10px] text-stone-400 mt-0.5">Today, 10:45 AM • IP: 192.168.1.104</p>
+</div>
+<span class="text-[10px] font-mono text-stone-400">#44921</span>
+</div>
+<div class="flex items-center gap-4 py-3 border-b border-surface-container-low">
+<span class="material-symbols-outlined text-stone-400" data-icon="vpn_key">vpn_key</span>
+<div class="flex-1">
+<p class="text-xs text-on-surface"><span class="font-bold">Elena S.</span> successfully integrated Siigo API Batch 702</p>
+<p class="text-[10px] text-stone-400 mt-0.5">Yesterday, 04:12 PM • Auto-Task</p>
+</div>
+<span class="text-[10px] font-mono text-stone-400">#44919</span>
+</div>
+<div class="flex items-center gap-4 py-3">
+<span class="material-symbols-outlined text-error" data-icon="report">report</span>
+<div class="flex-1">
+<p class="text-xs text-on-surface"><span class="font-bold text-error">Access Denied:</span> Failed login attempt on user 'superuser'</p>
+<p class="text-[10px] text-stone-400 mt-0.5">Oct 24, 02:22 AM • IP: 45.23.11.2</p>
+</div>
+<span class="text-[10px] font-mono text-stone-400">#44918</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Contextual FAB (Suppressed on Settings according to rules, but added here for UI completeness as a global shell if needed on other pages. Not rendered here per suppression rule) -->
+</body></html>

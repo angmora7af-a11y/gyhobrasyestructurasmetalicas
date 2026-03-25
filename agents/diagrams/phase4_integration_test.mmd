@@ -1,0 +1,60 @@
+sequenceDiagram
+    box Planning Team
+    participant LD as Leaders (Tech Lead + PDM)
+    end
+
+    box Integration & Quality Team (Final Flow)
+    participant Sonar as sonar-quality-gate
+    participant MCPInt as mcp-integration-tester
+    participant VideoRec as test-video-recorder
+    participant UnitRev as unit-test-standards-reviewer
+    participant Report as quality-report-generator
+    end
+
+    %% PHASE 0: Trigger - Final Integration Test
+    Note over LD,Report: PHASE 4: Final Integration & Quality Flow
+
+    LD->>Sonar: Trigger final quality & integration validation
+    Note right of LD: Inputs from phases 2 & 3:<br/>- Backend (OpenAPI/Swagger)<br/>- Frontend Web (React/Angular)<br/>- Frontend App (Flutter/React Native)
+
+    %% PHASE 1: Sonar Quality Validation
+    Note over Sonar,Report: PHASE 1: Quality Validations (Sonar)
+
+    activate Sonar
+    Note right of Sonar: Sonar Quality Gate:<br/>- Code quality (bugs, code smells)<br/>- Security (vulnerabilities, hotspots)<br/>- Coverage (unit tests %)<br/>- Duplications<br/>- Maintainability rating<br/>- Reliability rating<br/>- Pass/Fail quality gate
+    Sonar->>Sonar: Run analysis (Backend + Frontend)
+    Sonar-->>UnitRev: Sonar report (coverage, issues)
+    Sonar-->>MCPInt: ✓ Quality gate passed / failed
+    deactivate Sonar
+
+    %% PHASE 2: Unit Test Standards Review
+    Note over UnitRev: PHASE 2: Unit Test Standards Review
+
+    activate UnitRev
+    Note right of UnitRev: Unit Test Standards Review:<br/>- Naming conventions<br/>- Coverage thresholds (>80%)<br/>- Assertion quality<br/>- Test isolation & independence<br/>- Mock/stub usage<br/>- Edge cases coverage<br/>- Alignment with Sonar report
+    UnitRev-->>Report: Unit test standards report
+    deactivate UnitRev
+
+    %% PHASE 3: MCP Integration Testing + Video Recording
+    Note over MCPInt,VideoRec: PHASE 3: MCP Integration Testing & Video Recording
+
+    Sonar->>MCPInt: Proceed with integration tests
+    activate MCPInt
+    Note right of MCPInt: MCP Integration Testing:<br/>- E2E flows (Backend ↔ Frontend)<br/>- API contract validation<br/>- Cross-module scenarios<br/>- Playwright / Cypress / MCP tools<br/>- Environment parity checks<br/>- Integration test results
+    MCPInt->>VideoRec: Request test execution recording
+    deactivate MCPInt
+
+    activate VideoRec
+    Note right of VideoRec: Test Video Recording (MCP):<br/>- Record E2E test runs<br/>- Record integration scenarios<br/>- Screenshots on failure<br/>- Video per test suite / flow<br/>- Attach to test reports
+    VideoRec-->>Report: Test videos + screenshots
+    deactivate VideoRec
+
+    MCPInt-->>Report: Integration test results
+
+    %% PHASE 4: Consolidated Report & Delivery
+    Note over Report: PHASE 4: Consolidated Quality Report
+
+    activate Report
+    Note right of Report: Final Report includes:<br/>- Sonar quality gate result<br/>- Unit test standards review<br/>- Integration test results (MCP)<br/>- Test video recordings<br/>- Coverage & metrics summary<br/>- Go/No-Go recommendation
+    Report-->>LD: Final quality report + test videos
+    deactivate Report

@@ -1,0 +1,45 @@
+sequenceDiagram
+    participant PO as Product Owner
+    participant Archive as Archive System
+    participant HUPlan as hu-work-planner
+    participant Gimena as gimena-scheduler
+    participant Teams as Development Teams
+
+    Note over PO,Teams: PLANNING PHASE - WORK SCHEDULER SYSTEM
+    
+    PO->>Archive: Submit planning inputs (single request)
+    Note right of Archive: Inputs Archived:<br/>- Conversation .txt<br/>- Database design.sql<br/>- Architecture docs<br/>- Technical notes
+    
+    Archive->>HUPlan: Forward all planning inputs
+    
+    activate HUPlan
+    Note right of HUPlan: HU Generation Process
+    
+    HUPlan->>HUPlan: 1. Analyze all inputs
+    HUPlan->>HUPlan: 2. Extract requirements
+    HUPlan->>HUPlan: 3. Generate HUs for ALL modules
+    HUPlan->>HUPlan: 4. Create HU files structure
+    
+    HUPlan->>Gimena: Submit consolidated HUs (all modules)
+    deactivate HUPlan
+    
+    activate Gimena
+    Note right of Gimena: Schedule Validation & Creation
+    
+    Gimena->>Gimena: 1. Validate consolidated HUs
+    Gimena->>Gimena: 2. Organize by modules
+    Gimena->>Gimena: 3. Analyze task dependencies
+    Gimena->>Gimena: 4. Allocate resources (Backend/Frontend)
+    Gimena->>Gimena: 5. Set time projections per module:
+    Note right of Gimena: Time Allocation Example:<br/>Module A:<br/>- Backend: 6h<br/>- Frontend: 6h<br/>- Planning: 1.5h<br/>- Integration: 2.5h<br/>- Deployment: 1.5h<br/><br/>Module B:<br/>- Backend: 8h<br/>- Frontend: 8h<br/>- Planning: 2h<br/>- Integration: 3h<br/>- Deployment: 2h
+    
+    Gimena->>Gimena: 6. Create milestone timeline:
+    Note right of Gimena: Project Milestones:<br/>Phase 1: Planning + Module A Backend start<br/>Phase 2: Module A complete + Module B start<br/>Phase 3: Module B complete + Integration<br/>Phase 4: Testing + Deployment
+    
+    Gimena->>Gimena: 7. Generate complete schedule document:
+    Note right of Gimena: Schedule Includes:<br/>- Modules breakdown<br/>- HUs per module<br/>- Timing & hour estimates<br/>- Project phases/milestones<br/>- Resource allocation
+    
+    Gimena-->>PO: Complete Schedule Document
+    deactivate Gimena
+    
+    PO->>Teams: Distribute schedule to development teams

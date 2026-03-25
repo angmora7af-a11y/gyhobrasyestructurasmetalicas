@@ -1,0 +1,222 @@
+// 1. IMPORTACIÓN DE FUENTES (Google Fonts)
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@300;400;700&display=swap');
+
+// 2. VARIABLES DE DISEÑO
+$primary-green: #ccff00; // Verde neón característico
+$dark-bg: #111111;
+$white: #ffffff;
+$gray-light: #f4f4f4;
+$gray-border: rgba(255, 255, 255, 0.1);
+$text-muted: #888;
+
+$font-titles: 'Montserrat', sans-serif;
+$font-body: 'Roboto', sans-serif;
+
+// 3. MIXINS (Reutilización)
+@mixin section-padding {
+  padding: 80px 10%;
+}
+
+@mixin title-bold {
+  font-family: $font-titles;
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+// 4. ESTILOS BASE
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-body;
+  background-color: $white;
+  color: $dark-bg;
+  line-height: 1.6;
+}
+
+// 5. COMPONENTES GLOBALES
+.btn-neon {
+  background-color: $primary-green;
+  color: $dark-bg;
+  padding: 18px 35px;
+  font-family: $font-titles;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(204, 255, 0, 0.4);
+  }
+}
+
+// 6. SECCIONES ESPECÍFICAS
+
+// Header & Hero (Captura 3)
+.hero-section {
+  @include section-padding;
+  height: 90vh;
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('obra-bg.jpg') center/cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: $white;
+
+  .brand-logo { width: 180px; margin-bottom: 40px; }
+
+  h1 {
+    @include title-bold;
+    font-size: 4.5rem;
+    line-height: 0.9;
+    margin-bottom: 20px;
+
+    span {
+      display: block;
+      color: $primary-green;
+    }
+  }
+
+  .stats-container {
+    display: flex;
+    gap: 60px;
+    margin-top: 50px;
+
+    .stat-item {
+      border-top: 1px solid $gray-border;
+      padding-top: 15px;
+      
+      h2 { color: $primary-green; font-size: 2rem; margin: 0; }
+      p { font-size: 0.8rem; text-transform: uppercase; font-weight: 700; }
+    }
+  }
+}
+
+// Productos (Captura 2)
+.products-section {
+  @include section-padding;
+  background-color: $white;
+
+  &__header {
+    margin-bottom: 50px;
+    h2 { @include title-bold; font-size: 3rem; }
+    p { color: $text-muted; max-width: 500px; }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  &__card {
+    border: 1px solid #eee;
+    padding: 50px 30px;
+    text-align: center;
+    transition: 0.3s;
+    position: relative;
+
+    &:hover {
+      border-color: $primary-green;
+      .btn-arrow { background-color: $primary-green; }
+    }
+
+    .icon { font-size: 3rem; color: $primary-green; margin-bottom: 20px; }
+    
+    h3 { 
+      @include title-bold; 
+      font-size: 1.1rem; 
+      line-height: 1.2;
+    }
+
+    .btn-arrow {
+      background: #eee;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto 0;
+    }
+  }
+}
+
+// Proyectos (Captura 4)
+.projects-section {
+  @include section-padding;
+  text-align: center;
+
+  h2 { @include title-bold; font-size: 3.5rem; margin-bottom: 50px; }
+
+  &__gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  &__item {
+    img { width: 100%; height: 280px; object-fit: cover; }
+    h4 { 
+      @include title-bold; 
+      font-size: 0.9rem; 
+      margin-top: 15px; 
+      color: #333;
+    }
+  }
+}
+
+// FAQ (Captura 1)
+.faq-section {
+  @include section-padding;
+  background-color: $dark-bg;
+  color: $white;
+  display: flex;
+  gap: 100px;
+
+  .faq-intro {
+    flex: 1;
+    h2 { @include title-bold; font-size: 3.5rem; margin-bottom: 30px; }
+    h3 { color: $primary-green; font-size: 1.8rem; margin-bottom: 30px; }
+  }
+
+  .faq-list {
+    flex: 1.5;
+    
+    .faq-item {
+      border-bottom: 1px solid $gray-border;
+      padding: 25px 0;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+
+      &::before {
+        content: '+';
+        color: $white;
+        margin-right: 20px;
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        color: $primary-green;
+      }
+    }
+  }
+}
+
+// 7. RESPONSIVE
+@media (max-width: 992px) {
+  .hero-section h1 { font-size: 3rem; }
+  .faq-section { flex-direction: column; gap: 50px; }
+  .projects-section__gallery { grid-template-columns: repeat(2, 1fr); }
+}

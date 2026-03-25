@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Commercial Funnel | G&amp;H Obras</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&amp;family=Inter:wght@400;500;600;700&amp;family=Montserrat:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#5f5e5e",
+              "on-primary": "#ffffff",
+              "primary-container": "#e30613",
+              "primary-fixed": "#ffdad5",
+              "on-primary-fixed": "#410001",
+              "surface-variant": "#e2e2e2",
+              "on-secondary-fixed-variant": "#474746",
+              "surface-container-lowest": "#ffffff",
+              "error": "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "tertiary-container": "#607a00",
+              "surface-container-highest": "#e2e2e2",
+              "outline-variant": "#e9bcb6",
+              "background": "#f9f9f9",
+              "on-error-container": "#93000a",
+              "secondary-container": "#e2dfde",
+              "inverse-primary": "#ffb4aa",
+              "on-tertiary-fixed-variant": "#3c4d00",
+              "surface": "#f9f9f9",
+              "on-error": "#ffffff",
+              "on-surface": "#1a1c1c",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#e8e8e8",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed-dim": "#c8c6c5",
+              "on-tertiary-container": "#ecffb1",
+              "surface-bright": "#f9f9f9",
+              "on-secondary-fixed": "#1c1b1b",
+              "tertiary-fixed": "#c3f400",
+              "on-primary-container": "#fff5f3",
+              "on-background": "#1a1c1c",
+              "secondary-fixed": "#e5e2e1",
+              "inverse-on-surface": "#f1f1f1",
+              "tertiary-fixed-dim": "#abd600",
+              "primary": "#b5000b",
+              "primary-fixed-dim": "#ffb4aa",
+              "outline": "#936e69",
+              "surface-tint": "#c0000c",
+              "on-surface-variant": "#5e3f3b",
+              "surface-container": "#eeeeee",
+              "tertiary": "#4b6000",
+              "surface-container-low": "#f3f3f3",
+              "on-tertiary-fixed": "#161e00",
+              "on-secondary-container": "#636262",
+              "surface-dim": "#dadada",
+              "on-primary-fixed-variant": "#930007",
+              "inverse-surface": "#2f3131"
+            },
+            fontFamily: {
+              "headline": ["Montserrat", "Epilogue", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+              "label": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+      }
+      .funnel-clip-path {
+        clip-path: polygon(10% 0%, 90% 0%, 80% 100%, 20% 100%);
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary-fixed">
+<!-- SideNavBar (Execution from JSON) -->
+<aside class="flex flex-col h-screen fixed left-0 top-0 z-40 bg-stone-900 dark:bg-black docked w-64">
+<div class="p-6">
+<h1 class="text-xl font-black text-white tracking-tighter uppercase font-headline">G&amp;H Obras</h1>
+<p class="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500 mt-1">Industrial Ledger</p>
+</div>
+<nav class="mt-4 flex-1">
+<a class="flex items-center text-stone-400 hover:text-stone-100 pl-5 py-3 transition-colors font-['Montserrat'] tracking-tight font-bold uppercase text-xs" href="#">
+<span class="material-symbols-outlined mr-3">engineering</span>
+                Operation
+            </a>
+<!-- Active State Logic: Commercial Funnel Screen maps to Commercial Tab -->
+<a class="flex items-center border-l-4 border-red-600 text-red-500 bg-stone-800/50 pl-4 py-3 transition-all font-['Montserrat'] tracking-tight font-bold uppercase text-xs" href="#">
+<span class="material-symbols-outlined mr-3">payments</span>
+                Commercial
+            </a>
+<a class="flex items-center text-stone-400 hover:text-stone-100 pl-5 py-3 transition-colors font-['Montserrat'] tracking-tight font-bold uppercase text-xs" href="#">
+<span class="material-symbols-outlined mr-3">account_balance</span>
+                Finance
+            </a>
+<a class="flex items-center text-stone-400 hover:text-stone-100 pl-5 py-3 transition-colors font-['Montserrat'] tracking-tight font-bold uppercase text-xs" href="#">
+<span class="material-symbols-outlined mr-3">admin_panel_settings</span>
+                Administration
+            </a>
+</nav>
+<div class="mt-auto pb-8">
+<a class="flex items-center text-stone-400 hover:text-stone-100 pl-5 py-3 transition-colors font-['Montserrat'] tracking-tight font-bold uppercase text-xs" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+                Settings
+            </a>
+<a class="flex items-center text-stone-400 hover:text-stone-100 pl-5 py-3 transition-colors font-['Montserrat'] tracking-tight font-bold uppercase text-xs" href="#">
+<span class="material-symbols-outlined mr-3">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopAppBar (Execution from JSON) -->
+<header class="flex justify-between items-center w-full px-8 py-4 sticky top-0 z-30 bg-stone-50/90 dark:bg-stone-950/90 backdrop-blur-md">
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-stone-400 text-sm">search</span>
+</span>
+<input class="bg-surface-container-high border-none text-xs font-semibold py-2 pl-10 pr-4 rounded-full w-64 focus:ring-2 focus:ring-red-500/20 placeholder:text-stone-500 transition-all" placeholder="Search opportunities..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-stone-600 dark:text-stone-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-stone-600 dark:text-stone-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-stone-200 overflow-hidden ring-2 ring-stone-200">
+<img class="h-full w-full object-cover" data-alt="Manager profile photo, professional man in early 40s, high-end industrial executive aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgsaw3mELOn65GY6t_esjGivNRCtzZLurRqpXex-PwtXuXHRO83LqXSetWSMMM9aefXCptToOG-R9LEqdaRSJByMyKoe1xIK1lYxatlTQYDc6gy-0eoWJmnbX1qO9BCrB8K_XM8llo_zTymQR4UbPKW6wo4oxfeqbMRFlTkB6gbiAKFgnSpqzk0uBNc-O65lG8_gocvxWpg60GmPzeYcGqh7KgFAQMTR_U2cXjUFH6ncrGHMuH6U_OiufQfSzUuTLsQMGseNym9H_C"/>
+</div>
+</div>
+</header>
+<!-- Divider from JSON -->
+<div class="bg-stone-200 dark:bg-stone-800 h-[1px] w-full"></div>
+<!-- Dashboard Content -->
+<div class="p-8 max-w-7xl mx-auto">
+<!-- Page Header & Filters -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
+<div>
+<h2 class="font-headline font-black text-4xl tracking-tighter uppercase text-on-surface">Commercial Funnel</h2>
+<p class="text-on-surface-variant font-medium mt-1">Pipeline Performance &amp; Opportunity Management</p>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low p-1.5 rounded-lg shadow-sm">
+<div class="flex items-center px-3 gap-2">
+<span class="material-symbols-outlined text-stone-500 text-sm">person</span>
+<select class="bg-transparent border-none text-xs font-bold uppercase tracking-wider focus:ring-0 p-0 cursor-pointer">
+<option>All Salespeople</option>
+<option>Ricardo G. (G&amp;H)</option>
+<option>Elena V. (Industrial)</option>
+</select>
+</div>
+<div class="h-6 w-[1px] bg-stone-300"></div>
+<div class="flex items-center px-3 gap-2">
+<span class="material-symbols-outlined text-stone-500 text-sm">calendar_today</span>
+<select class="bg-transparent border-none text-xs font-bold uppercase tracking-wider focus:ring-0 p-0 cursor-pointer">
+<option>Last 30 Days</option>
+<option>Q3 2023</option>
+<option>Year to Date</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Funnel Visualization Area -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+<!-- The Sales Funnel Chart (Bento Style) -->
+<div class="lg:col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16"></div>
+<h3 class="font-headline font-bold text-lg uppercase tracking-tight mb-8 flex items-center gap-2">
+<span class="w-1 h-5 bg-primary block"></span>
+                        Pipeline Distribution
+                    </h3>
+<div class="flex flex-col gap-1 items-center max-w-2xl mx-auto">
+<!-- Funnel Stage: New Leads -->
+<div class="w-full h-16 bg-primary flex items-center justify-between px-10 transition-transform hover:scale-[1.01] cursor-pointer" style="clip-path: polygon(0% 0%, 100% 0%, 96% 100%, 4% 100%);">
+<span class="text-white font-headline font-black text-sm uppercase tracking-widest">New Leads</span>
+<span class="text-white font-headline font-black text-xl">142</span>
+</div>
+<!-- Funnel Stage: Technical Validation -->
+<div class="w-[92%] h-16 bg-primary/90 flex items-center justify-between px-10 transition-transform hover:scale-[1.01] cursor-pointer" style="clip-path: polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%);">
+<span class="text-white font-headline font-black text-sm uppercase tracking-widest">Technical Validation</span>
+<span class="text-white font-headline font-black text-xl">86</span>
+</div>
+<!-- Funnel Stage: Quoted -->
+<div class="w-[84%] h-16 bg-primary/80 flex items-center justify-between px-10 transition-transform hover:scale-[1.01] cursor-pointer" style="clip-path: polygon(0% 0%, 100% 0%, 94% 100%, 6% 100%);">
+<span class="text-white font-headline font-black text-sm uppercase tracking-widest">Quoted</span>
+<span class="text-white font-headline font-black text-xl">54</span>
+</div>
+<!-- Funnel Stage: Client Approval -->
+<div class="w-[76%] h-16 bg-primary/70 flex items-center justify-between px-10 transition-transform hover:scale-[1.01] cursor-pointer" style="clip-path: polygon(0% 0%, 100% 0%, 92% 100%, 8% 100%);">
+<span class="text-white font-headline font-black text-sm uppercase tracking-widest">Client Approval</span>
+<span class="text-white font-headline font-black text-xl">21</span>
+</div>
+<!-- Funnel Stage: Scheduled Dispatch -->
+<div class="w-[68%] h-16 bg-tertiary flex items-center justify-between px-10 transition-transform hover:scale-[1.01] cursor-pointer" style="clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%);">
+<span class="text-on-tertiary-fixed font-headline font-black text-sm uppercase tracking-widest">Scheduled Dispatch</span>
+<span class="text-on-tertiary-fixed font-headline font-black text-xl">12</span>
+</div>
+</div>
+<div class="mt-12 grid grid-cols-3 gap-4 border-t border-stone-100 pt-8">
+<div>
+<p class="text-[10px] font-bold text-stone-500 uppercase tracking-widest">Total Value</p>
+<p class="font-headline font-black text-2xl text-on-surface">$4.2M</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-stone-500 uppercase tracking-widest">Conversion Rate</p>
+<p class="font-headline font-black text-2xl text-tertiary">8.4%</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-stone-500 uppercase tracking-widest">Avg. Cycle</p>
+<p class="font-headline font-black text-2xl text-on-surface">18 Days</p>
+</div>
+</div>
+</div>
+<!-- Secondary Stats Card -->
+<div class="lg:col-span-4 flex flex-col gap-4">
+<div class="bg-inverse-surface p-6 rounded-xl flex-1 flex flex-col justify-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-4">trending_up</span>
+<p class="text-stone-400 font-bold uppercase tracking-[0.2em] text-[10px]">Revenue Forecast</p>
+<p class="text-white font-headline font-black text-4xl mt-1">$1.28M</p>
+<p class="text-tertiary-fixed-dim text-xs font-semibold mt-2">+12% vs last month</p>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl flex-1">
+<p class="text-stone-500 font-bold uppercase tracking-[0.2em] text-[10px] mb-4">Top Performer</p>
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 rounded-full bg-stone-300">
+<img class="h-full w-full object-cover rounded-full" data-alt="Female sales professional smiling, corporate industrial portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqw0wKg4vV3oyTZXC1sZROqGrXg-4aHG2pVsEhj3C7A5fIpKmYb_s-NIhNO2uEa8yrUbjFv7je7nAQsIy-l1IwhX-ar_RLTBWNp4OyU3MOR9a9NC3tz79VYdFldNZkeBoGo8m0ThR5SGiS2PG3vqc9fJCIRZFARY4EXzy9J-tMzU12jZmaI0YtvV6BJoI0HWDs7fny2OTBQeD8yoLij6U_DKucESqHZ-5f-7poV8v-Z7x4A0WW8te-nHtFzN0fwuNDbY9WOJ-ghCCm"/>
+</div>
+<div>
+<p class="text-on-surface font-headline font-extrabold uppercase text-sm">Elena Valdes</p>
+<p class="text-stone-500 text-xs font-medium">8 Closed Deals this week</p>
+</div>
+</div>
+<div class="mt-6 w-full bg-stone-300 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[85%]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Opportunities List -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-6 flex justify-between items-center bg-surface-container-low/50">
+<h3 class="font-headline font-bold text-lg uppercase tracking-tight flex items-center gap-2">
+<span class="w-1 h-5 bg-primary block"></span>
+                        Active Opportunities
+                    </h3>
+<button class="bg-primary text-white font-headline font-black text-[10px] uppercase tracking-widest px-4 py-2 hover:bg-primary-container transition-colors shadow-lg shadow-primary/20">
+                        + New Opportunity
+                    </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-stone-600 font-headline">Client Name</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-stone-600 font-headline">Project / Site</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-stone-600 font-headline">Value</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-stone-600 font-headline">Probability</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-stone-600 font-headline">Last Contact</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-stone-600 font-headline">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-stone-100">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-headline font-bold text-sm text-on-surface">Constructora Horizon</span>
+</div>
+</td>
+<td class="px-6 py-5 text-stone-600 text-xs font-semibold">Terminal 4 Expansion</td>
+<td class="px-6 py-5">
+<span class="font-headline font-black text-on-surface text-sm">$420,000</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-stone-200 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[90%]"></div>
+</div>
+<span class="text-[10px] font-black text-tertiary">90%</span>
+</div>
+</td>
+<td class="px-6 py-5 text-stone-500 text-xs">Today, 09:14 AM</td>
+<td class="px-6 py-5">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] font-black uppercase tracking-widest px-2 py-1">Client Approval</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-stone-300"></div>
+<span class="font-headline font-bold text-sm text-on-surface">Minera del Norte</span>
+</div>
+</td>
+<td class="px-6 py-5 text-stone-600 text-xs font-semibold">Ventilation Shaft B</td>
+<td class="px-6 py-5">
+<span class="font-headline font-black text-on-surface text-sm">$1,150,000</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-stone-200 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[60%]"></div>
+</div>
+<span class="text-[10px] font-black text-on-surface">60%</span>
+</div>
+</td>
+<td class="px-6 py-5 text-stone-500 text-xs">Oct 12, 2023</td>
+<td class="px-6 py-5">
+<span class="border border-stone-300 text-stone-600 text-[10px] font-black uppercase tracking-widest px-2 py-1">Technical Val</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-stone-300"></div>
+<span class="font-headline font-bold text-sm text-on-surface">Suez Logistics</span>
+</div>
+</td>
+<td class="px-6 py-5 text-stone-600 text-xs font-semibold">Cold Storage Unit</td>
+<td class="px-6 py-5">
+<span class="font-headline font-black text-on-surface text-sm">$85,400</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-stone-200 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[45%]"></div>
+</div>
+<span class="text-[10px] font-black text-on-surface">45%</span>
+</div>
+</td>
+<td class="px-6 py-5 text-stone-500 text-xs">Yesterday, 4:45 PM</td>
+<td class="px-6 py-5">
+<span class="bg-secondary-container text-on-secondary-container text-[10px] font-black uppercase tracking-widest px-2 py-1">Quoted</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-stone-300"></div>
+<span class="font-headline font-bold text-sm text-on-surface">Pueblo Steel Co.</span>
+</div>
+</td>
+<td class="px-6 py-5 text-stone-600 text-xs font-semibold">Blast Furnace Support</td>
+<td class="px-6 py-5">
+<span class="font-headline font-black text-on-surface text-sm">$294,000</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-stone-200 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[95%]"></div>
+</div>
+<span class="text-[10px] font-black text-tertiary">95%</span>
+</div>
+</td>
+<td class="px-6 py-5 text-stone-500 text-xs">Oct 11, 2023</td>
+<td class="px-6 py-5">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] font-black uppercase tracking-widest px-2 py-1">Scheduled</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 border-t border-stone-100 flex justify-center">
+<button class="text-[10px] font-black uppercase tracking-widest text-stone-400 hover:text-primary transition-colors">View All Opportunities (142)</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Floating Action Button for Lead Generation -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-105 transition-transform active:scale-95 group">
+<span class="material-symbols-outlined text-2xl group-hover:rotate-90 transition-transform">add</span>
+</button>
+</div>
+</body></html>

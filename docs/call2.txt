@@ -1,0 +1,24 @@
+Transcripción: Validaciones y Ajustes Técnicos
+Vuelve a revisar los requerimientos teniendo en cuenta algunas acotaciones de validación. Entonces, las facturas sí o sí siempre tienen que ir por Siigo; ese sistema es aparte, no se va a cambiar. Lo que se va a reforzar es un poco el proceso de cobro y cartera basado pues en todo lo que igual también se reporta en Siigo, para poder establecer distintos canales de recolección y mejorar el pago en general oportuno de las facturas, de entrada resolviendo pues el desorden inicial de las facturas mismas.
+
+El catálogo como tal por equipos pues debe darse, como se indica ahí, alfor equipos. Debe poderse tener en cuenta en las APIs algunos endpoints globales para que se pueda subir en archivos de Excel pues para poder realizar como tal la migración. Por ahora no se tiene en cuenta que sean catálogos con imágenes, solamente como la información del producto, de pronto el uso y claramente el precio. El precio estará definido por día y no por hora; esa parte sí es importante.
+
+Y como tal pues la idea es más adelante utilizarlo en distintas ciudades, entonces se hará un despliegue del sistema de manera independiente.
+
+Numeración de remisiones, devoluciones y el consecutivo:
+Las remisiones como tal pues sí deberían tener todo, debería tener un código; sí es importante para la trazabilidad. Eventualmente sería importante como algunas siglas alfanuméricas que tenga que ver con el nombre del cliente y un timestamp para que se pueda establecer también una doble llave de cuándo salen o se generan los equipos.
+
+No hay como tal especificaciones sobre transporte, daños y repuestos; esa parte no se tiene en cuenta dentro del sistema. Y el tema de WhatsApp pues quedará simplemente como módulo opcional, porque por ahora pues no se hará directamente por allí.
+
+Por ahora no se registran o no se tienen en cuenta devoluciones, solamente pues procesos de alquiler, venta directa y ya.
+
+Puntos clave a destacar:
+Integración Obligatoria: Facturación exclusivamente a través de Siigo.
+
+Carga Masiva: Migración inicial vía Excel mediante endpoints globales.
+
+Modelo de Cobro: Basado en días (no horas).
+
+Trazabilidad: Remisiones con código alfanumérico (ID Cliente + Timestamp).
+
+Exclusiones: No incluye gestión de transporte, daños, repuestos ni devoluciones por el momento.

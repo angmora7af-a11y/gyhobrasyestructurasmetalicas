@@ -1,0 +1,55 @@
+%% Flujos principales — alineado a call2.txt (sin devoluciones MVP; Siigo único FE)
+%% Archivo: flows-core.mmd
+
+%% --- Diagrama 1: Secuencia — Solicitud a remisión ---
+sequenceDiagram
+  autonumber
+  participant C as Cliente
+  participant W as Web
+  participant A as API FastAPI
+  participant L as Logística
+  participant DB as Base de datos
+
+  C->>W: Crear solicitud / cotización (ticket)
+  W->>A: POST /tickets
+  A->>DB: Persistir ticket + líneas
+  A-->>W: 201 + id ticket
+
+  Note over L,DB: Remisión con código visible = siglas cliente + timestamp (call2)
+
+  L->>W: Crear remisión desde flujo aprobado
+  W->>A: POST /shipments
+  A->>DB: Crear remisión + código trazable
+  A-->>W: 201 + código remisión
+
+%% --- Diagrama 2: Futuro — Devolución (fuera MVP) ---
+sequenceDiagram
+  autonumber
+  participant Note as Nota
+  Note-->>Note: Fase posterior: POST /returns cuando el negocio reactive el módulo (call2 excluye MVP)
+
+%% --- Diagrama 3: Flujo — Insumos y facturación (Siigo obligatorio) ---
+flowchart LR
+  subgraph K["Movimientos en plataforma"]
+    R["Remisiones\nventa directa"]
+    S["Saldos / reportes\n(sin devolución en app)"]
+  end
+
+  subgraph P["Plataforma"]
+    PR["Proforma / borrador\ninsumo"]
+    EXP["Export / integración\nhacia Siigo"]
+  end
+
+  subgraph SG["Siigo único emisor CPE"]
+    FE["Factura electrónica"]
+    RAD["RADIAN / DIAN"]
+  end
+
+  R --> S --> PR --> EXP --> FE --> RAD
+
+%% --- Diagrama 4: Cartera alineada a Siigo ---
+flowchart TD
+  SI["Datos facturas\nSiigo sync/import"] --> ORD["Orden y normalización\ncartera"]
+  ORD --> CH["Canales recolección\npago / comprobantes"]
+  ORD --> JOB["Recordatorios\nprogramados"]
+  JOB --> EST["Estados cobro"]

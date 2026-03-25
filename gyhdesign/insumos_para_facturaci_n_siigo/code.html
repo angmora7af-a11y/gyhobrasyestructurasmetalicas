@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>G&amp;H Obras - Facturación Insumos Siigo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;800;900&amp;family=Inter:wght@300;400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#1a1c1c",
+              "on-error-container": "#93000a",
+              "tertiary": "#4b6000",
+              "surface-variant": "#e2e2e2",
+              "secondary-fixed": "#e5e2e1",
+              "error": "#ba1a1a",
+              "tertiary-container": "#607a00",
+              "surface-tint": "#c0000c",
+              "primary-fixed": "#ffdad5",
+              "on-primary-container": "#fff5f3",
+              "secondary-fixed-dim": "#c8c6c5",
+              "on-secondary-fixed": "#1c1b1b",
+              "on-background": "#1a1c1c",
+              "surface-bright": "#f9f9f9",
+              "on-secondary-container": "#636262",
+              "primary-container": "#e30613",
+              "surface-container": "#eeeeee",
+              "on-primary-fixed-variant": "#930007",
+              "on-tertiary-container": "#ecffb1",
+              "secondary-container": "#e2dfde",
+              "background": "#f9f9f9",
+              "on-tertiary-fixed-variant": "#3c4d00",
+              "on-secondary-fixed-variant": "#474746",
+              "on-primary-fixed": "#410001",
+              "tertiary-fixed": "#c3f400",
+              "on-error": "#ffffff",
+              "surface-container-low": "#f3f3f3",
+              "on-primary": "#ffffff",
+              "surface-container-highest": "#e2e2e2",
+              "on-tertiary": "#ffffff",
+              "surface-dim": "#dadada",
+              "inverse-surface": "#2f3131",
+              "inverse-on-surface": "#f1f1f1",
+              "tertiary-fixed-dim": "#abd600",
+              "outline-variant": "#e9bcb6",
+              "surface-container-high": "#e8e8e8",
+              "primary-fixed-dim": "#ffb4aa",
+              "surface": "#f9f9f9",
+              "on-secondary": "#ffffff",
+              "primary": "#b5000b",
+              "inverse-primary": "#ffb4aa",
+              "surface-container-lowest": "#ffffff",
+              "outline": "#936e69",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed": "#161e00",
+              "secondary": "#5f5e5e",
+              "on-surface-variant": "#5e3f3b"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f9f9f9;
+      }
+      .industrial-ledger-header {
+        font-family: 'Epilogue', sans-serif;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- SideNavBar (Execution from JSON) -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-zinc-900 flex flex-col py-6">
+<div class="px-6 mb-10">
+<h1 class="text-xl font-black text-white tracking-tighter uppercase font-['Epilogue']">G&amp;H OBRAS</h1>
+<p class="text-[10px] font-bold text-zinc-500 tracking-[0.2em] uppercase font-['Epilogue']">Industrial Ledger</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Operación -->
+<a class="text-zinc-400 hover:text-zinc-100 pl-5 py-3 transition-colors flex items-center gap-3 font-['Epilogue'] uppercase tracking-tighter font-bold text-xs" href="#">
+<span class="material-symbols-outlined text-lg">engineering</span>
+<span>Operación</span>
+</a>
+<!-- Comercial -->
+<a class="text-zinc-400 hover:text-zinc-100 pl-5 py-3 transition-colors flex items-center gap-3 font-['Epilogue'] uppercase tracking-tighter font-bold text-xs" href="#">
+<span class="material-symbols-outlined text-lg">payments</span>
+<span>Comercial</span>
+</a>
+<!-- Finanzas (ACTIVE) -->
+<a class="border-l-4 border-red-600 bg-zinc-800 text-white pl-4 py-3 transition-all flex items-center gap-3 font-['Epilogue'] uppercase tracking-tighter font-bold text-xs" href="#">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+<span>Finanzas</span>
+</a>
+<!-- Administración -->
+<a class="text-zinc-400 hover:text-zinc-100 pl-5 py-3 transition-colors flex items-center gap-3 font-['Epilogue'] uppercase tracking-tighter font-bold text-xs" href="#">
+<span class="material-symbols-outlined text-lg">admin_panel_settings</span>
+<span>Administración</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<div class="p-4 bg-zinc-800/50 rounded-lg">
+<p class="text-[10px] text-zinc-500 font-bold uppercase mb-2 tracking-widest">Estado Sistema</p>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>
+<span class="text-xs text-white font-medium">Sincronizado con Siigo</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopAppBar (Execution from JSON) -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-slate-50 flex justify-between items-center px-8 z-10">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-zinc-400">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-64 font-['Epilogue'] font-medium" placeholder="Buscar proformas o remisiones..." type="text"/>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-zinc-500 hover:bg-zinc-100 p-2 rounded-full transition-opacity duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-zinc-500 hover:bg-zinc-100 p-2 rounded-full transition-opacity duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-zinc-200"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-xs font-bold text-zinc-900 uppercase tracking-tighter leading-none">Admin G&amp;H</p>
+<p class="text-[10px] text-zinc-500 font-medium">Facturación</p>
+</div>
+<img class="w-10 h-10 rounded-full object-cover grayscale" data-alt="professional headshot of a financial administrator in a corporate setting with neutral lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBF3EbzBz7yNNhWqkFRWbM-uHykTqRlsxKK4_x_txxpQZSN3kH-xMF9uYTaVPH1JCOoZfT00rnNDzHa_T-xgQzp0T2YE4-HupgXqAI2tE1DRP4W42iSNNFNT7l3zBMeiEXH7PaIiX6uPt_k8ZozFkiipXDXgco-RnNUnwfNDoq9xtDPFQU_o1fOU-xJtKGETCGnG1anp8FdO3CQmcvnpCHbO4Uw8g5Vbc7nsug_qWdlfCLWcwM1EEIFrrnKOyqdX3EhVDGRy3B1Q9ZX"/>
+</div>
+</div>
+<div class="absolute bg-zinc-200 h-[1px] bottom-0 left-0 right-0"></div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-8 min-h-[calc(100vh-4rem)]">
+<!-- Dashboard Header -->
+<section class="mb-8 flex justify-between items-end">
+<div>
+<h2 class="text-3xl font-black text-on-surface uppercase tracking-tighter industrial-ledger-header leading-none">Insumos Siigo</h2>
+<p class="text-on-surface-variant font-medium mt-2 max-w-xl text-sm">Panel de consolidación de remisiones y generación de archivos de intercambio para el ERP Siigo.</p>
+<div class="mt-4 inline-flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm">info</span>
+                    Facturación electrónica gestionada en Siigo
+                </div>
+</div>
+<button class="flex items-center gap-3 bg-primary text-white px-6 py-4 font-black uppercase tracking-tighter text-sm hover:bg-primary-container transition-all shadow-xl shadow-primary/10 group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">ios_share</span>
+                Exportar a Siigo (CSV/Excel)
+            </button>
+</section>
+<div class="grid grid-cols-12 gap-6">
+<!-- Periodos de Corte (List Layout as Cards) -->
+<div class="col-span-4 space-y-4">
+<div class="flex items-center justify-between mb-2 px-1">
+<h3 class="text-xs font-black uppercase tracking-[0.2em] text-zinc-400">Periodos de Corte</h3>
+<button class="text-primary text-[10px] font-bold uppercase underline tracking-tighter">Ver Historial</button>
+</div>
+<!-- Current Period Card -->
+<div class="bg-surface-container-lowest p-6 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex justify-between items-start mb-4">
+<span class="bg-primary-container text-on-primary-container px-2 py-0.5 text-[10px] font-black uppercase tracking-tighter">Activo</span>
+<span class="text-xs font-medium text-on-surface-variant">ID: 2023-11A</span>
+</div>
+<p class="text-2xl font-black industrial-ledger-header tracking-tighter mb-1 uppercase">Noviembre 2023</p>
+<p class="text-xs text-on-surface-variant mb-4">Corte: 01 Nov - 15 Nov</p>
+<div class="flex gap-4 border-t border-surface-container pt-4">
+<div>
+<p class="text-[10px] font-bold text-zinc-400 uppercase leading-none">Pendientes</p>
+<p class="text-lg font-black text-on-surface">42</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-zinc-400 uppercase leading-none">Procesadas</p>
+<p class="text-lg font-black text-on-surface">128</p>
+</div>
+</div>
+</div>
+<!-- Previous Period Card -->
+<div class="bg-surface-container-low p-6 relative group border-l-4 border-transparent hover:border-zinc-300 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-black uppercase tracking-tighter text-zinc-500 border border-zinc-300 px-2 py-0.5">Cerrado</span>
+<span class="text-xs font-medium text-on-surface-variant">ID: 2023-10B</span>
+</div>
+<p class="text-xl font-black industrial-ledger-header tracking-tighter mb-1 uppercase text-zinc-500">Octubre 2023</p>
+<p class="text-xs text-zinc-400">Corte: 16 Oct - 31 Oct</p>
+</div>
+</div>
+<!-- Proformas Management (Main Table) -->
+<div class="col-span-8">
+<div class="bg-surface-container-lowest overflow-hidden">
+<div class="p-6 flex justify-between items-center bg-surface-container-low">
+<h3 class="text-xs font-black uppercase tracking-[0.2em] text-on-surface">Consolidado de Remisiones</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 bg-white text-[10px] font-bold uppercase tracking-tighter border border-zinc-200 hover:bg-zinc-50 transition-colors">Filtrar por Obra</button>
+<button class="px-3 py-1.5 bg-zinc-900 text-white text-[10px] font-black uppercase tracking-tighter hover:bg-black transition-colors">Generar Proformas</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Remisión</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Cliente / Obra</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Fecha</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Insumos</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant text-right">Total Neto</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant text-center">Estado</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<p class="font-bold text-xs">REM-98234</p>
+<p class="text-[10px] text-zinc-400">#P001-Cons</p>
+</td>
+<td class="px-6 py-4">
+<p class="font-bold text-xs uppercase">Constructora Bolivar</p>
+<p class="text-[10px] text-zinc-400">Pórticos de Occidente</p>
+</td>
+<td class="px-6 py-4 text-xs font-medium">12 Nov 2023</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-1">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest border border-white flex items-center justify-center text-[8px] font-black">C</span>
+<span class="w-6 h-6 rounded-full bg-surface-container-highest border border-white flex items-center justify-center text-[8px] font-black">V</span>
+<span class="w-6 h-6 rounded-full bg-surface-container-highest border border-white flex items-center justify-center text-[8px] font-black">H</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs font-black text-right">$4.250.000</td>
+<td class="px-6 py-4">
+<div class="flex justify-center">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 text-[9px] font-black uppercase tracking-tighter">Consolidado</span>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<p class="font-bold text-xs">REM-98235</p>
+<p class="text-[10px] text-zinc-400">#P001-Cons</p>
+</td>
+<td class="px-6 py-4">
+<p class="font-bold text-xs uppercase">Arquitectura &amp; Concreto</p>
+<p class="text-[10px] text-zinc-400">Torres del Este</p>
+</td>
+<td class="px-6 py-4 text-xs font-medium">13 Nov 2023</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-1">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest border border-white flex items-center justify-center text-[8px] font-black">C</span>
+<span class="w-6 h-6 rounded-full bg-zinc-900 text-white border border-white flex items-center justify-center text-[8px] font-black">+2</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs font-black text-right">$12.180.500</td>
+<td class="px-6 py-4">
+<div class="flex justify-center">
+<span class="border border-outline text-on-surface-variant px-2 py-0.5 text-[9px] font-black uppercase tracking-tighter">Pendiente</span>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<p class="font-bold text-xs">REM-98240</p>
+<p class="text-[10px] text-zinc-400">#P002-Cons</p>
+</td>
+<td class="px-6 py-4">
+<p class="font-bold text-xs uppercase">Inversiones G&amp;H</p>
+<p class="text-[10px] text-zinc-400">Mantenimiento Planta 2</p>
+</td>
+<td class="px-6 py-4 text-xs font-medium">14 Nov 2023</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-1">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest border border-white flex items-center justify-center text-[8px] font-black">M</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs font-black text-right">$850.000</td>
+<td class="px-6 py-4">
+<div class="flex justify-center">
+<span class="bg-primary-container text-on-primary-container px-2 py-0.5 text-[9px] font-black uppercase tracking-tighter">En Proceso</span>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<p class="font-bold text-xs">REM-98241</p>
+<p class="text-[10px] text-zinc-400">#P002-Cons</p>
+</td>
+<td class="px-6 py-4">
+<p class="font-bold text-xs uppercase">Constructora Bolivar</p>
+<p class="text-[10px] text-zinc-400">Pórticos de Occidente</p>
+</td>
+<td class="px-6 py-4 text-xs font-medium">14 Nov 2023</td>
+<td class="px-6 py-4">
+<div class="flex -space-x-1">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest border border-white flex items-center justify-center text-[8px] font-black">V</span>
+<span class="w-6 h-6 rounded-full bg-surface-container-highest border border-white flex items-center justify-center text-[8px] font-black">H</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs font-black text-right">$2.100.000</td>
+<td class="px-6 py-4">
+<div class="flex justify-center">
+<span class="border border-outline text-on-surface-variant px-2 py-0.5 text-[9px] font-black uppercase tracking-tighter">Pendiente</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer -->
+<div class="p-4 bg-white border-t border-surface-container flex items-center justify-between">
+<p class="text-[10px] font-bold text-zinc-400 uppercase">Mostrando 4 de 42 remisiones pendientes</p>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center bg-zinc-100 text-zinc-400 cursor-not-allowed">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-white text-[10px] font-black">1</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-zinc-100 text-zinc-600 text-[10px] font-bold">2</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-zinc-100 text-zinc-600">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Analytical Bento-style Section -->
+<section class="mt-12 grid grid-cols-4 gap-6">
+<div class="bg-zinc-900 p-8 col-span-1 flex flex-col justify-between">
+<div>
+<h4 class="text-white/40 text-[10px] font-black uppercase tracking-widest mb-4">Total Proformado</h4>
+<p class="text-white text-4xl font-black industrial-ledger-header tracking-tighter">$142.8M</p>
+<p class="text-tertiary-fixed text-[10px] font-bold mt-2">+12.5% vs Mes Anterior</p>
+</div>
+<div class="h-1 bg-white/10 mt-8 relative overflow-hidden">
+<div class="absolute inset-y-0 left-0 w-3/4 bg-primary"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-8 col-span-3 grid grid-cols-3 gap-8">
+<div class="flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">cloud_upload</span>
+<h5 class="text-xs font-black uppercase tracking-widest">Siigo Connect</h5>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">Sincronización automática de maestros de productos y clientes activa. Última actualización: hoy 08:45 AM.</p>
+</div>
+<div class="flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
+<h5 class="text-xs font-black uppercase tracking-widest">Validación DIAN</h5>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">Las proformas generadas cumplen con los estándares de pre-validación para facturación electrónica 2.1.</p>
+</div>
+<div class="flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">history_edu</span>
+<h5 class="text-xs font-black uppercase tracking-widest">Trazabilidad</h5>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">Histórico completo de archivos exportados disponible para auditoría contable y conciliación bancaria.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Contextual FAB - Only for specific creation action -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-zinc-900 text-white rounded-full flex items-center justify-center shadow-2xl shadow-black/40 hover:scale-105 active:scale-95 transition-all group z-20">
+<span class="material-symbols-outlined text-2xl group-hover:rotate-90 transition-transform">add</span>
+</button>
+</body></html>

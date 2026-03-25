@@ -1,0 +1,120 @@
+sequenceDiagram
+    participant PO as Product Owner
+    participant HUFile as HU-234 File
+    participant HUPlan as hu-work-planner
+
+    box Backend Team (Workflow 05)
+    participant TDD as tdd-feature-developer
+    participant TSBack as typescript-expert
+    participant CodeRevBE as code-reviewer
+    participant Arch as architect-review
+    participant DebugBE as debugger
+    end
+
+    box Frontend Team (Workflow 03)
+    participant Figma as Figma Design
+    participant FigmaDev as figma-frontend-developer
+    participant TSFront as typescript-expert
+    participant CodeRevFE as code-reviewer
+    participant MobileUX as mobile-ux-engineer
+    participant DebugFE as debugger
+    end
+
+    box Integration & Deployment
+    participant Int as Integration
+    participant Deploy as hostinger-ssh-manager
+    participant Prod as Production
+    end
+
+    %% PHASE 1: Planning
+    Note over PO,HUPlan: PHASE 1: HU Analysis & Planning (1.5h)
+    PO->>HUFile: Provide user story
+    HUFile->>HUPlan: Read HU-234-payment-notifications.txt
+
+    activate HUPlan
+    Note right of HUPlan: - Parse requirements<br/>- Break down tasks<br/>- Estimate effort<br/>- Identify risks
+    HUPlan-->>PO: Work plan with estimates (13h total)
+    deactivate HUPlan
+
+    %% PHASE 2: Backend Development
+    Note over TDD,DebugBE: PHASE 2: Backend Development - TDD (6h)
+
+    HUPlan->>TDD: Backend requirements
+    activate TDD
+    Note right of TDD: Write failing tests:<br/>- Unit tests<br/>- Integration tests<br/>- E2E API tests
+    TDD->>TSBack: Tests written (failing)
+    deactivate TDD
+
+    activate TSBack
+    Note right of TSBack: Implement:<br/>- DB schema<br/>- API endpoints<br/>- Business logic<br/>- WebSocket<br/>- Email service
+    TSBack-->>CodeRevBE: Implementation complete
+    deactivate TSBack
+
+    activate CodeRevBE
+    Note right of CodeRevBE: Review:<br/>- Security (OWASP)<br/>- Best practices<br/>- Error handling<br/>- Performance
+    CodeRevBE-->>Arch: ✓ Code approved
+    deactivate CodeRevBE
+
+    activate Arch
+    Note right of Arch: Validate:<br/>- SOLID principles<br/>- Layering<br/>- Scalability<br/>- Extensibility
+    Arch-->>DebugBE: ✓ Architecture sound
+    deactivate Arch
+
+    activate DebugBE
+    Note right of DebugBE: - Run all tests<br/>- Fix failures<br/>- Coverage >80%<br/>- Performance test
+    DebugBE-->>Int: ✓ Backend ready
+    deactivate DebugBE
+
+    %% PHASE 3: Frontend Development
+    Note over Figma,DebugFE: PHASE 3: Frontend Development - Figma (6h)
+
+    HUPlan->>Figma: UI requirements
+    Figma->>FigmaDev: Figma design file URL
+
+    activate FigmaDev
+    Note right of FigmaDev: Figma MCP:<br/>- get_file_data()<br/>- get_variables()<br/>- Extract tokens<br/>- Generate components
+    FigmaDev->>TSFront: React components + types
+    deactivate FigmaDev
+
+    activate TSFront
+    Note right of TSFront: TypeScript:<br/>- Interfaces<br/>- Props types<br/>- Hooks<br/>- WebSocket client
+    TSFront-->>CodeRevFE: Type-safe code
+    deactivate TSFront
+
+    activate CodeRevFE
+    Note right of CodeRevFE: Review:<br/>- Security (XSS)<br/>- Performance<br/>- Accessibility<br/>- Best practices
+    CodeRevFE-->>MobileUX: ✓ Code approved
+    deactivate CodeRevFE
+
+    activate MobileUX
+    Note right of MobileUX: Test responsive:<br/>- Mobile 320px<br/>- Tablet 768px<br/>- Desktop 1024px<br/>- Screenshots (Playwright)
+    MobileUX-->>DebugFE: ✓ Responsive
+    deactivate MobileUX
+
+    activate DebugFE
+    Note right of DebugFE: - Fix React warnings<br/>- Memory leaks<br/>- WebSocket logic<br/>- UI bugs
+    DebugFE-->>Int: ✓ Frontend ready
+    deactivate DebugFE
+
+    %% PHASE 4: Integration
+    Note over Int: PHASE 4: Integration & E2E (2.5h)
+
+    activate Int
+    Note right of Int: - Connect FE to BE<br/>- WebSocket connection<br/>- API integration<br/>- E2E tests<br/>- Cross-browser
+    Int-->>Deploy: ✓ Integration complete
+    deactivate Int
+
+    %% PHASE 5: Deployment
+    Note over Deploy,Prod: PHASE 5: Deployment (1.5h)
+
+    activate Deploy
+    Note right of Deploy: Hostinger SSH MCP:<br/>- Build assets<br/>- Deploy backend<br/>- Deploy frontend<br/>- Run migrations<br/>- Restart services
+    Deploy->>Prod: Deploy to production
+    deactivate Deploy
+
+    activate Prod
+    Note right of Prod: Smoke tests:<br/>- Health check<br/>- Test notification<br/>- WebSocket works<br/>- Monitor errors
+    Prod-->>PO: ✓ Feature live!
+    deactivate Prod
+
+    Note over PO,Prod: Total Duration: 2-3 days (17.5h)

@@ -1,0 +1,39 @@
+# architecture.md (Ejemplo mínimo de arquitectura)
+
+Este archivo es un ejemplo para que el Pre-Project Hook y los agentes tengan un punto de partida.
+
+## 1) Resumen
+- Estilo: Clean Architecture
+- Capas:
+  - `domain`: entidades y reglas de negocio
+  - `use-cases`: orquestación (ej. `LoginUser`)
+  - `infrastructure`: persistencia, adapters, externos
+  - `presentation`: controladores/endpoints y UI hooks
+
+## 2) Bounded Contexts (si aplica)
+- Identity/Auth: usuarios, sesiones, tokens, login/logout
+- (Otros bounded contexts...) Billing, Notifications, etc.
+
+## 3) Contrato de Autenticación (Login)
+
+### 3.1 OAuth2 / OpenID (alto nivel)
+- Flujo: authorization code / token exchange (según plataforma)
+- JWT: esquema de claims (aud, sub, exp) (ajustar a tu sistema)
+
+### 3.2 Endpoints (ejemplo)
+- `POST /auth/login`
+  - Request: `{ email, password, deviceInfo? }`
+  - Response: `{ accessToken, refreshToken?, user }`
+  - Errors:
+    - `400`: validación
+    - `401`: credenciales inválidas
+    - `429`: rate limit (si aplica)
+
+## 4) Manejo de Errores y Logs
+- No imprimir tokens/contraseñas en logs.
+- Formato de logs para seguridad (intent failed, correlationId).
+
+## 5) Calidad y Tests
+- Cobertura mínima sugerida: >80%
+- Validación de contratos: OpenAPI/Swagger
+

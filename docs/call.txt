@@ -1,0 +1,18 @@
+Transcripción del Requerimiento
+A continuación, requiero que realices el estudio de historias de usuario para la propuesta de una plataforma. La plataforma como tal describe un proceso en el cual hay que leer el caso de negocio, se tienen distintos actores dentro del sistema.
+
+La idea es poder establecer y combinar el alquiler de equipos de construcción; poder hacer inicialmente una subida masiva por parte de los proveedores de los registros o de los productos que se tienen. Luego, poder tener un administrador que igual revise o pueda aprobar y ver todo.
+
+Necesitamos que pues se pueda elaborar una remisión, primero como que se pueda solicitar, hacer una solicitud de los equipos que se requieren por parte de un cliente externo, que debe pues tener unos papeles, unos registros; que se pueda hacer a nivel logístico (ese es otro usuario) que pueda hacer la remisión de lo que se registra y lo que sale de la empresa.
+
+Y luego algo que pueda, un proceso ya del cliente cuando retorna los productos que se alquilan, poder hacer una facturación. Entonces, como poder cada producto que se sube igual tiene un precio de alquiler; algunos productos pueden ser también en una categoría de venta, otros de alquiler por hora, y apenas se entregue es que se debe facturar pues según el tiempo desde el cual se sacó hasta que se entregó, poder emitir en PDF la factura de manera automática.
+
+La última parte o el improve del proceso sería poder enviar las facturas y hacer un proceso de cartera (el módulo se llamaría "Cartera") para el envío de facturas de manera automática. Entonces, digamos que a la fecha hace el recuento de lo que está pendiente por pagar y lo envía por correo las facturas con un acumulado.
+
+Esa sería como la idea en la conciliación con el cliente; es el proceso y la parte final. Es un archivado de Kardex con remisiones, devoluciones o cualquier cosa que pueda suceder allí.
+
+Por parte del administrador, me gustaría ver, no sé, cantidad de equipos, cantidad de órdenes en proceso, equipos solicitados, algunas gráficas que me muestren pues ese estatus y cuántos equipos están en préstamo, cuántos están quietos o que están como en espera de ser de tener el alquiler. Y todas las métricas de pago también para entender un poco en facturación y en cartera (no sé si sería otro dashboard) poder bien ver pues quiénes están pendientes, morosos, quiénes ya pagaron y luego poder establecer pues una estrategia más óptima para cobro directamente, pues usando mucho tema de IA.
+
+Debe tenerse siempre en cuenta como toda la el style del cliente, y la idea es que sea una experiencia de una barra vertical y un espacio de trabajo muy convencional. Debe tener un registro de login para los usuarios. Debe haber un proceso alterno (ese es otro módulo) para análisis de crédito en esas líneas con los distintos proveedores o clientes y un proceso también de registro mucho más automatizado, me lo imagino de pronto con una integración con WhatsApp para que pueda suplir las necesidades de de todo el cliente.
+
+La idea también es poder establecer el orden correcto en el que debe desarrollarse todos los todos los módulos.

@@ -1,0 +1,385 @@
+// =============================================================================
+// G&H / gyhobras — modelo lógico de base de datos
+// =============================================================================
+// TIPO: RELACIONAL (PostgreSQL 14+ recomendado)
+// NO usar como BD primaria: documental (MongoDB), grafo o solo Redis para persistencia
+//   de negocio; Redis/Cola es auxiliar (jobs, cache), no sustituto transaccional.
+//
+// Fuentes: pdr/PDR-04, pdr/PDR-05, hus/HU_RUN-MVP-2026-03-24-all.md, call2.txt (MVP)
+// MVP: sin devoluciones; CPE solo Siigo; precio alquiler por día; remisión código visible.
+// =============================================================================
+
+Project gyhobras {
+  database_type: "PostgreSQL"
+  Note: "Modelo relacional normalizado. Multi-instancia: una BD por despliegue/ciudad o tenant_id obligatorio en tablas de negocio."
+}
+
+// Enumeraciones: en PostgreSQL usar CREATE TYPE ... AS ENUM o VARCHAR + CHECK.
+// Valores documentados en comentarios de columna.
+
+// =============================================================================
+// Tenancy / configuración (FR-110)
+// =============================================================================
+
+Table tenant {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [unique, not null, note: "Código instancia ej. BOG_MED"]
+  name varchar(255) [not null]
+  city_code varchar(32) [note: "ej. BOG"]
+  timezone varchar(64) [default: "America/Bogota"]
+  settings_json jsonb [note: "Branding, límites, flags"]
+  created_at timestamptz [default: `now()`]
+}
+
+// =============================================================================
+// Usuarios, roles, sesión (FR-001–004)
+// =============================================================================
+
+Table app_user {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  email citext [not null, note: "único por tenant"]
+  password_hash varchar [not null]
+  full_name varchar(255)
+  is_active boolean [default: true]
+  failed_login_count int [default: 0]
+  locked_until timestamptz
+  created_at timestamptz [default: `now()`]
+  updated_at timestamptz
+
+  indexes {
+    (tenant_id, email) [unique]
+  }
+}
+
+Table role {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(32) [not null, unique, note: "admin|catalog_contributor|client|logistics|billing|ar|credit"]
+  name varchar(100) [not null]
+}
+
+Table user_role {
+  user_id uuid [ref: > app_user.id, not null]
+  role_id uuid [ref: > role.id, not null]
+
+  indexes {
+    (user_id, role_id) [pk]
+  }
+}
+
+Table refresh_token {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [ref: > app_user.id, not null]
+  token_hash varchar [not null]
+  expires_at timestamptz [not null]
+  revoked_at timestamptz
+  created_at timestamptz [default: `now()`]
+}
+
+Table password_reset_token {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [ref: > app_user.id, not null]
+  token_hash varchar [not null]
+  expires_at timestamptz [not null]
+  used_at timestamptz
+  created_at timestamptz [default: `now()`]
+}
+
+Table audit_log {
+  id bigserial [pk]
+  tenant_id uuid [ref: > tenant.id]
+  user_id uuid [ref: > app_user.id]
+  entity_type varchar(80) [not null, note: "product, shipment, import_batch, ar_invoice, ..."]
+  entity_id uuid [note: "nullable si tabla usa bigint"]
+  entity_id_bigint bigint [note: "alternativa si PK numérica"]
+  action varchar(64) [not null]
+  payload_json jsonb [note: "diff o snapshot"]
+  created_at timestamptz [default: `now()`, not null]
+
+  indexes {
+    (entity_type, created_at)
+    (user_id, created_at)
+  }
+}
+
+// =============================================================================
+// Clientes, sucursales, obras (FR-020, FR-021) — alineado INDEX NIT/SUC
+// =============================================================================
+
+Table client {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  nit varchar(32) [not null, note: "Normalizado sin puntos o con formato único acordado"]
+  legal_name varchar(255) [not null]
+  remission_prefix varchar(16) [note: "Siglas alfanuméricas para código remisión (FR-041)"]
+  is_active boolean [default: true]
+  created_at timestamptz [default: `now()`]
+
+  indexes {
+    (tenant_id, nit) [unique]
+  }
+}
+
+Table client_branch {
+  id uuid [pk, default: `gen_random_uuid()`]
+  client_id uuid [ref: > client.id, not null]
+  suc_code varchar(16) [not null, note: "Código sucursal tipo INDEX"]
+  name varchar(255)
+
+  indexes {
+    (client_id, suc_code) [unique]
+  }
+}
+
+Table site {
+  id uuid [pk, default: `gen_random_uuid()`]
+  client_branch_id uuid [ref: > client_branch.id, not null]
+  name varchar(255) [not null]
+  address text
+  contact_name varchar(255)
+  contact_phone varchar(64)
+  created_at timestamptz [default: `now()`]
+}
+
+// =============================================================================
+// Catálogo y bodegas (FR-010–012) — sin imagen MVP
+// =============================================================================
+
+Table warehouse {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  code varchar(32) [not null, note: "ej. 1 Engativa, 50 clientes"]
+  name varchar(255) [not null]
+
+  indexes {
+    (tenant_id, code) [unique]
+  }
+}
+
+Table product {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  sku_code varchar(64) [not null, note: "Código producto tipo INDEX"]
+  description text [not null]
+  category varchar(128)
+  rental_enabled boolean [default: false]
+  sale_enabled boolean [default: false]
+  rental_price_per_day decimal(18,4) [note: "Solo día; no hora"]
+  sale_price decimal(18,4)
+  usage_notes text [note: "Uso / observaciones FR-010a"]
+  is_active boolean [default: true]
+  created_at timestamptz [default: `now()`]
+  updated_at timestamptz
+
+  indexes {
+    (tenant_id, sku_code) [unique]
+  }
+}
+
+Table product_warehouse_stock {
+  product_id uuid [ref: > product.id, not null]
+  warehouse_id uuid [ref: > warehouse.id, not null]
+  quantity decimal(18,4) [default: 0]
+
+  indexes {
+    (product_id, warehouse_id) [pk]
+  }
+}
+
+// =============================================================================
+// Importación masiva Excel (FR-013–016)
+// =============================================================================
+
+Table import_batch {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  created_by uuid [ref: > app_user.id]
+  status varchar(32) [not null, default: "draft", note: "draft|pending_approval|approved|rejected"]
+  file_name varchar(512)
+  total_rows int [default: 0]
+  error_rows int [default: 0]
+  created_at timestamptz [default: `now()`]
+  approved_at timestamptz
+  approved_by uuid [ref: > app_user.id]
+}
+
+Table import_batch_row {
+  id bigserial [pk]
+  batch_id uuid [ref: > import_batch.id, not null]
+  row_number int [not null]
+  raw_json jsonb [not null]
+  status varchar(32) [note: "ok, error"]
+  error_message text
+}
+
+// =============================================================================
+// Crédito (FR-022, FR-023)
+// =============================================================================
+
+Table credit_application {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  client_id uuid [ref: > client.id, not null]
+  status varchar(32) [not null, default: "in_review", note: "in_review|approved|rejected|conditioned"]
+  notes text
+  blocks_shipment boolean [default: false]
+  created_at timestamptz [default: `now()`]
+  updated_at timestamptz
+}
+
+Table credit_application_file {
+  id uuid [pk, default: `gen_random_uuid()`]
+  application_id uuid [ref: > credit_application.id, not null]
+  file_url text [not null]
+  file_name varchar(512)
+  uploaded_at timestamptz [default: `now()`]
+}
+
+// =============================================================================
+// Solicitudes / cotizaciones (FR-030–033)
+// =============================================================================
+
+Table ticket {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  client_id uuid [ref: > client.id, not null]
+  site_id uuid [ref: > site.id]
+  created_by_client_user_id uuid [ref: > app_user.id, note: "si cliente portal"]
+  status varchar(32) [not null, default: "received", note: "received|in_quotation|quotation_sent|accepted|rejected"]
+  requested_on date [note: "Fecha requerida obra"]
+  first_response_at timestamptz [note: "SLA"]
+  quotation_sent_at timestamptz
+  created_at timestamptz [default: `now()`]
+  updated_at timestamptz
+}
+
+Table ticket_line {
+  id uuid [pk, default: `gen_random_uuid()`]
+  ticket_id uuid [ref: > ticket.id, not null]
+  product_id uuid [ref: > product.id, not null]
+  quantity decimal(18,4) [not null]
+}
+
+Table ticket_attachment {
+  id uuid [pk, default: `gen_random_uuid()`]
+  ticket_id uuid [ref: > ticket.id, not null]
+  file_url text [not null]
+  file_name varchar(512)
+  uploaded_at timestamptz [default: `now()`]
+}
+
+// =============================================================================
+// Remisiones y venta directa (FR-040–045) — sin devolución en MVP
+// =============================================================================
+
+Table shipment {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  display_code varchar(128) [unique, not null, note: "Siglas cliente + timestamp FR-041"]
+  client_id uuid [ref: > client.id, not null]
+  site_id uuid [ref: > site.id]
+  ticket_id uuid [ref: > ticket.id]
+  kind varchar(32) [default: "rental_dispatch", note: "rental_dispatch"]
+  occurred_at timestamptz [not null, note: "Base timestamp código"]
+  created_by uuid [ref: > app_user.id]
+  created_at timestamptz [default: `now()`]
+}
+
+Table shipment_line {
+  id uuid [pk, default: `gen_random_uuid()`]
+  shipment_id uuid [ref: > shipment.id, not null]
+  product_id uuid [ref: > product.id, not null]
+  quantity_shipped decimal(18,4) [not null]
+}
+
+Table direct_sale {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  client_id uuid [ref: > client.id, not null]
+  site_id uuid [ref: > site.id]
+  internal_reference varchar(64) [note: "Orden interna FR-043"]
+  created_by uuid [ref: > app_user.id]
+  created_at timestamptz [default: `now()`]
+}
+
+Table direct_sale_line {
+  id uuid [pk, default: `gen_random_uuid()`]
+  direct_sale_id uuid [ref: > direct_sale.id, not null]
+  product_id uuid [ref: > product.id, not null]
+  quantity decimal(18,4) [not null]
+  unit_price decimal(18,4) [not null]
+}
+
+// =============================================================================
+// Proforma / borrador insumo facturación (FR-070–073) — NO CPE
+// =============================================================================
+
+Table billing_draft {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  client_id uuid [ref: > client.id, not null]
+  period_start date [not null]
+  period_end date [not null]
+  status varchar(32) [note: "draft, client_approved, exported"]
+  client_approved_at timestamptz
+  created_at timestamptz [default: `now()`]
+}
+
+Table billing_draft_line {
+  id uuid [pk, default: `gen_random_uuid()`]
+  draft_id uuid [ref: > billing_draft.id, not null]
+  product_id uuid [ref: > product.id]
+  description text
+  quantity decimal(18,4)
+  unit_price decimal(18,4)
+  line_total decimal(18,4)
+}
+
+// =============================================================================
+// Espejo cartera / Siigo (FR-080–082) — facturas no emitidas por esta app
+// =============================================================================
+
+Table siigo_invoice_mirror {
+  id uuid [pk, default: `gen_random_uuid()`]
+  tenant_id uuid [ref: > tenant.id, not null]
+  client_id uuid [ref: > client.id, not null]
+  siigo_document_number varchar(64) [note: "Consecutivo F1 u otro en Siigo"]
+  issue_date date
+  due_date date
+  total_amount decimal(18,4) [not null]
+  balance_amount decimal(18,4) [not null]
+  status varchar(32) [not null, note: "pending|partial|paid|overdue|written_off"]
+  raw_payload_json jsonb [note: "Sync API o import"]
+  last_synced_at timestamptz
+
+  indexes {
+    (tenant_id, siigo_document_number) [unique]
+  }
+}
+
+Table payment_entry {
+  id uuid [pk, default: `gen_random_uuid()`]
+  invoice_id uuid [ref: > siigo_invoice_mirror.id, not null]
+  channel varchar(64) [note: "transfer, cash, portal, FR-081"]
+  reference varchar(128)
+  amount decimal(18,4) [not null]
+  paid_at timestamptz
+  notes text
+  attachment_url text
+  created_at timestamptz [default: `now()`]
+}
+
+Table ar_reminder_log {
+  id bigserial [pk]
+  invoice_id uuid [ref: > siigo_invoice_mirror.id, not null]
+  sent_at timestamptz [not null]
+  channel varchar(32) [note: "email"]
+  template_version varchar(32)
+  status varchar(32)
+}
+
+// =============================================================================
+// Vistas materializadas / reporting: implementar como VIEW o MV (FR-060–062)
+// =============================================================================
+// vw_movement_detail obra, vw_kardex_client — no tablas físicas obligatorias;
+//   saldos calculados desde shipment_line, direct_sale_line según reglas PDR-04.

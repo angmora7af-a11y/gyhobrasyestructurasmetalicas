@@ -1,0 +1,69 @@
+sequenceDiagram
+    box Planning Team
+    participant LD as Leaders
+    end
+
+    box Backend Team (Workflow 05)
+    participant DataEng as data-engineer
+    participant TDD as tdd-feature-developer
+    participant Backend as backend (node nestjs / python fastapi)
+    participant CodeRevBE as code-reviewer
+    participant Arch as architect-review
+    participant DebugBE as debugger
+    participant QAInt as qa-integrator (API Testing)
+    end
+
+    %% PHASE 0: Input Delivery to Backend Team
+    Note over LD,QAInt: PHASE 0: Planning Inputs Delivery to Backend Team
+    
+    LD->>DataEng: Deliver HUs and requirements
+    LD->>TDD: Deliver HUs and requirements
+    LD->>Backend: Deliver HUs and requirements
+    Note right of LD: All team members receive:<br/>- HUs breakdown<br/>- Technical requirements<br/>- Acceptance criteria<br/>- Estimated effort
+
+    %% PHASE 1: Data Model Design (Before Backend Development)
+    Note over DataEng: PHASE 1: Data Model Engineering (Before Backend Dev)
+    
+    activate DataEng
+    Note right of DataEng: Data Engineering Process:<br/>- Design data model<br/>- Define schemas<br/>- Optimize data structure<br/>- Validate relationships<br/>- Create migration scripts<br/>- Generate DBML file
+    DataEng->>Backend: DBML file (data model design)
+    deactivate DataEng
+
+    %% PHASE 2: Backend Development
+    Note over TDD,DebugBE: PHASE 2: Backend Development - TDD (6h)
+
+    activate TDD
+    Note right of TDD: Write failing tests:<br/>- Unit tests<br/>- Integration tests<br/>- E2E API tests
+    TDD->>Backend: Tests written (failing)
+    deactivate TDD
+
+    activate Backend
+    Note right of Backend: Implement:<br/>- DB schema (from DataEng)<br/>- API endpoints<br/>- Business logic<br/>- WebSocket<br/>- Email service<br/>- Node.js NestJS / Python FastAPI
+    Backend-->>CodeRevBE: Implementation complete
+    deactivate Backend
+
+    activate CodeRevBE
+    Note right of CodeRevBE: Review:<br/>- Security (OWASP)<br/>- Best practices<br/>- Error handling<br/>- Performance
+    CodeRevBE-->>Arch: ✓ Code approved
+    deactivate CodeRevBE
+
+    activate Arch
+    Note right of Arch: Validate:<br/>- SOLID principles<br/>- Layering<br/>- Scalability<br/>- Extensibility
+    Arch-->>DebugBE: ✓ Architecture sound
+    deactivate Arch
+
+    activate DebugBE
+    Note right of DebugBE: - Run all tests<br/>- Fix failures<br/>- Coverage >80%<br/>- Performance test
+    DebugBE-->>QAInt: ✓ Backend ready for integration testing
+    deactivate DebugBE
+
+    %% PHASE 3: QA Integration & Automated API Testing
+    Note over QAInt: PHASE 3: QA Integration & Automated API Testing
+    
+    activate QAInt
+    Note right of QAInt: Automated API Testing Process:<br/>1. API Contract Validation:<br/>   - Validate against OpenAPI/Swagger spec<br/>   - Check request/response schemas<br/>   - Verify status codes<br/><br/>2. E2E API Testing:<br/>   - Test all endpoints<br/>   - Validate business flows<br/>   - Test error scenarios<br/>   - Test edge cases<br/><br/>3. Integration Testing:<br/>   - Test service integrations<br/>   - Validate data flow<br/>   - Test database interactions<br/><br/>4. Performance & Load Testing:<br/>   - Response time validation<br/>   - Load testing<br/>   - Stress testing<br/><br/>5. Security Testing:<br/>   - Authentication/Authorization<br/>   - Input validation<br/>   - SQL injection checks<br/>   - XSS protection<br/><br/>6. Documentation Generation:<br/>   - Generate OpenAPI/Swagger spec<br/>   - Create API documentation<br/>   - Generate test reports
+    QAInt-->>QAInt: Generate test reports & OpenAPI Swagger URL
+    deactivate QAInt
+    
+    QAInt-->>LD: Backend complete + Test Reports + OpenAPI Swagger URL
+    Note right of QAInt: Output:<br/>- URL with complete OpenAPI Swagger documentation<br/>- Automated test execution reports<br/>- API coverage metrics<br/>- Performance benchmarks

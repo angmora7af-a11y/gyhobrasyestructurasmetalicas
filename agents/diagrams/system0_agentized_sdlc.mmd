@@ -1,0 +1,62 @@
+flowchart TD
+  %% ============ Entrada / Orquestación ============
+  A[Bitbucket Issue + comentarios / señal ADW] --> B[Runner Orquestador (Webhook Receiver)]
+
+  %% ============ Pre-Project Hook ============
+  B --> C{Pre-Project Hook}
+  C -->|valida| C1[claude.md + architecture.md]
+  C -->|ok| D
+  C -->|fail| Z[Stop: falta contexto mínimo]
+
+  %% ============ Contrato de método ============
+  D[Spec-kit + Templates + Diagrams] --> E{Ejecutar agentes por fase}
+
+  %% ============ Agentes (especialidades) ============
+  E --> P1[Phase 1: Planning / Scheduler]
+  E --> P2[Phase 2: Backend + OpenAPI/Swagger]
+  E --> P3[Phase 3: Frontend UI (Web/App)]
+  E --> P4[Phase 4: Integración & Calidad]
+  E --> P5[Phase 5: CI/CD Deploy]
+
+  %% ============ Pila de agentes ============
+  subgraph F[Agents (rol + restricciones)]
+    FAout[Outputs consolidados] 
+    FA1[Architect] --> FAout
+    FA2[Fullstack Developer] --> FAout
+    FA3[Flutter Developer] --> FAout
+    FA4[Data Engineer] --> FAout
+    FA5[Fixed Errors] --> FAout
+    FA6[Auditor] --> FAout
+
+    FP1[HU Work Planner] --> FAout
+    FP2[Gimena Scheduler] --> FAout
+
+    FQA1[QA Integrator (API Testing)] --> FAout
+    FI1[Integration (UI ↔ API)] --> FAout
+
+    FQ2[Sonar Quality Gate] --> FAout
+    FU1[Unit Test Standards Reviewer] --> FAout
+    FMCP[MCP Integration Tester] --> FAout
+    FV[Video Recorder] --> FAout
+    FGR[Quality Report Generator] --> FAout
+  end
+
+  %% ============ Hooks Post-query / KPI ============
+  P1 --> H{Post-Query Hook (kpi.txt)}
+  P2 --> H
+  P3 --> H
+  P4 --> H
+  P5 --> H
+  H --> I[Actualiza kpi.txt (tokens + status)]
+
+  %% ============ PR / Pipelines ============
+  I --> J[Outputs + evidencias verificables]
+  J --> K[PR en Bitbucket (branch + commits + revisión)]
+  K --> L[Bitbucket Pipelines]
+
+  %% ============ Deploy + Feedback ============
+  L --> M[Deploy automático]
+  M --> M1[Containers/API (EC2) o Apps (tiendas)]
+  M1 --> N[Feedback loop: logs, crash/analytics, métricas]
+  N --> A
+

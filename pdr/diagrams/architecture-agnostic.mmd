@@ -1,0 +1,42 @@
+%% Arquitectura lógica agnóstica de proveedor cloud
+%% Renderizar con cualquier visor Mermaid compatible
+
+flowchart TB
+  subgraph Clientes["Usuarios"]
+    U1["Cliente externo"]
+    U2["Admin / Facturación / Logística / Cartera / Crédito"]
+  end
+
+  subgraph Edge["Borde"]
+    CDN["CDN / reverse proxy"]
+    WAF["HTTPS / TLS"]
+  end
+
+  subgraph App["Aplicación monorepo"]
+    WEB["SPA Web\n(roles, sidebar)"]
+    API["API FastAPI\nPython\n+ endpoints migración Excel"]
+  end
+
+  subgraph Data["Datos y procesos"]
+    DB[("PostgreSQL")]
+    REDIS[("Redis\njobs / cache")]
+    STORE["Almacenamiento\nobjetos (adjuntos)"]
+  end
+
+  subgraph External["Sistemas externos"]
+    SIIGO["Siigo\n(FE / contabilidad)"]
+    MAIL["SMTP / proveedor email"]
+    WA["WhatsApp / Meta\n(fase posterior)"]
+  end
+
+  U1 --> CDN
+  U2 --> CDN
+  CDN --> WAF
+  WAF --> WEB
+  WEB -->|"REST/JSON + auth"| API
+  API --> DB
+  API --> REDIS
+  API --> STORE
+  API -->|"integración según decisión"| SIIGO
+  API --> MAIL
+  API -.->|"opcional"| WA

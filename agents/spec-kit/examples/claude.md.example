@@ -1,0 +1,22 @@
+# claude.md (Ejemplo mínimo)
+
+Este archivo es consumido por el Pre-Project Hook para validar que existe contexto mínimo.
+
+## Rol del modelo
+- Actúa como el agente solicitado (Architect/Fullstack/Flutter/etc.) pero respeta:
+  - arquitectura (Clean Architecture y capas)
+  - bounded contexts (si aplica)
+  - formatos de salida definidos por el agente
+
+## Reglas de seguridad y token
+- No revelar secretos.
+- No inventar endpoints, tablas o librerías no presentes en `architecture.md`.
+- Ahorra token: resume contexto y pregunta solo lo necesario cuando falte info.
+
+## Convenciones de salida
+- Usa Markdown estructurado con secciones fijas.
+- Si falta información, agrega una sección `Aclaraciones Necesarias`.
+
+## Caso de referencia
+- Flujo de autenticación: OAuth2/OpenID + contrato de UI antes del código.
+

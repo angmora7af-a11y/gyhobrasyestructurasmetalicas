@@ -1,0 +1,61 @@
+sequenceDiagram
+    box Planning Team
+    participant LD as Leaders (Tech Lead + PDM)
+    end
+
+    box Frontend Team (Workflow 03)
+    participant Figma as Figma Design
+    participant FigmaDev as figma-frontend-developer
+    participant FrontExpert as frontend-expert (flutter / react native)
+    participant CodeRevFE as code-reviewer
+    participant MobileUX as mobile-ux-engineer
+    participant DebugFE as debugger
+    end
+
+    participant Int as Integration
+
+    %% PHASE 0: Input Delivery to Frontend Team
+    Note over LD,DebugFE: PHASE 0: Planning Inputs Delivery to Frontend Team
+
+    LD->>Figma: Deliver HUs and UI requirements
+    LD->>FigmaDev: Deliver HUs and requirements
+    LD->>FrontExpert: Deliver HUs and requirements
+    Note right of LD: All team members receive:<br/>- HUs breakdown<br/>- UI/UX requirements<br/>- Acceptance criteria<br/>- Estimated effort
+
+    %% PHASE 1: Frontend Development - Figma (6h)
+    Note over Figma,DebugFE: PHASE 1: Frontend Development - Figma (6h)
+
+    Figma->>FigmaDev: Figma design file URL
+
+    activate FigmaDev
+    Note right of FigmaDev: Figma MCP:<br/>- get_file_data()<br/>- get_variables()<br/>- Extract tokens<br/>- Generate components
+    FigmaDev->>FrontExpert: Flutter / React Native components + types
+    deactivate FigmaDev
+
+    activate FrontExpert
+    Note right of FrontExpert: Specialized agents (Flutter / React Native):<br/>- Widgets & Props types<br/>- State management (Provider / Redux)<br/>- Native APIs & bridges<br/>- WebSocket client<br/>- API integration
+    FrontExpert-->>CodeRevFE: Type-safe code
+    deactivate FrontExpert
+
+    activate CodeRevFE
+    Note right of CodeRevFE: Review:<br/>- Security (XSS)<br/>- Performance<br/>- Accessibility<br/>- Best practices
+    CodeRevFE-->>MobileUX: ✓ Code approved
+    deactivate CodeRevFE
+
+    activate MobileUX
+    Note right of MobileUX: Test responsive:<br/>- Mobile 320px<br/>- Tablet 768px<br/>- Desktop 1024px<br/>- Screenshots (Playwright)
+    MobileUX-->>DebugFE: ✓ Responsive
+    deactivate MobileUX
+
+    activate DebugFE
+    Note right of DebugFE: - Fix Flutter / React Native warnings<br/>- Memory leaks<br/>- WebSocket logic<br/>- UI bugs
+    DebugFE-->>Int: ✓ Frontend ready
+    deactivate DebugFE
+
+    %% PHASE 2: Integration Output
+    Note over Int: PHASE 2: Integration Output
+
+    activate Int
+    Note right of Int: Integration delivers:<br/>- Swagger / OpenAPI API documentation URL<br/>- Unit tests (frontend + API)<br/>- E2E test reports<br/>- Build & deploy artifacts
+    Int-->>LD: Swagger + OpenAPI API URL + Unit tests
+    deactivate Int
