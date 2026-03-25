@@ -10,9 +10,9 @@
 
 ## Convenciones globales
 
-- [ ] Login / recuperación contraseña
+- [x] Login — UI + validación cliente (`apps/web`, HU-002 parcial); [ ] recuperación contraseña (HU-005)
 - [ ] Selector de rol si el usuario tiene más de uno
-- [ ] Notificaciones (campana) — fase 2
+- [ ] Notificaciones (campana) — fase 2 (shell incluye icono no funcional)
 - [ ] Ayuda contextual o enlaces a PDR
 - [ ] Tablas: paginación, filtros, export CSV donde aplique
 
@@ -38,7 +38,7 @@
 
 | Pantalla | Checklist |
 |----------|-----------|
-| **Dashboard** | [ ] resumen solicitudes abiertas; [ ] accesos rápidos |
+| **Dashboard** | [x] shell `/cliente` (HU-006); [ ] resumen solicitudes abiertas; [ ] accesos rápidos |
 | **Nueva solicitud** | [ ] líneas ítem/cantidad; [ ] selección obra; [ ] fecha requerida; [ ] adjuntos |
 | **Detalle solicitud** | [ ] timeline de estados; [ ] mensajes/comentarios |
 | **Movimientos** | [ ] tabla compatible `INDEX` (remisión; columnas devolución en 0 o import); saldo según regla MVP |
@@ -88,7 +88,7 @@
 
 | Módulo | Checklist |
 |--------|-----------|
-| **Dashboard** | [ ] equipos en préstamo; [ ] solicitudes abiertas; [ ] órdenes en proceso; [ ] gráfica simple cartera |
+| **Dashboard** | [x] shell KPIs placeholder (`/admin`, HU-022); [ ] equipos en préstamo; [ ] solicitudes abiertas; [ ] órdenes en proceso; [ ] gráfica cartera |
 | **Usuarios** | [ ] CRUD; [ ] asignación roles |
 | **Aprobación import** | [ ] diff o listado; [ ] aprobar/rechazar lote |
 | **Reportes** | [ ] export Excel/PDF; [ ] filtros NIT, fechas, obra |

@@ -2,7 +2,8 @@
 
 **Fuente:** `pdr/PDR-02`, `pdr/PDR-06`, `call2.txt`  
 **Corrida:** RUN-MVP-2026-03-24  
-**Archivo maestro:** [HU_RUN-MVP-2026-03-24-all.md](./HU_RUN-MVP-2026-03-24-all.md)
+**Archivo maestro:** [HU_RUN-MVP-2026-03-24-all.md](./HU_RUN-MVP-2026-03-24-all.md)  
+**Checklist implementación (React/API):** [SPECS-IMPLEMENTATION.md](./SPECS-IMPLEMENTATION.md) — estado por HU, rutas y referencias PDR.
 
 ## Mapa HU → FR
 
