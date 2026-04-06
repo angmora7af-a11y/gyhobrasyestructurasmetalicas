@@ -29,6 +29,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    environment:
+      # Dentro de la red Docker, Postgres no está en localhost.
+      DATABASE_URL: postgresql+asyncpg://gyh:gyh_dev@postgres:5432/gyh
+      REDIS_URL: redis://redis:6379/0
     depends_on:
       postgres:
         condition: service_healthy
