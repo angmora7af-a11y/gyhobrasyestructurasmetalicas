@@ -13,11 +13,9 @@ export function ShipmentPdfButton({ shipmentId }: Props) {
   async function download() {
     setDownloading(true);
     try {
-      const token = localStorage.getItem("gyh.auth.token");
-      const headers: Record<string, string> = {};
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
-      const res = await fetch(`/api/v1/shipments/${shipmentId}/pdf`, { headers });
+      const res = await fetch(`/api/v1/shipments/${shipmentId}/pdf`, {
+        credentials: "include",
+      });
       if (!res.ok) throw new Error("Error al descargar");
 
       const blob = await res.blob();

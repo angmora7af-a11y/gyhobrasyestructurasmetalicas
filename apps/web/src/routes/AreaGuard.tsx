@@ -14,7 +14,15 @@ type Props = {
  * Separa portal cliente vs shell administrativo según rol (HU-003, sitemap PDR).
  */
 export function AreaGuard({ area, children }: Props) {
-  const { user } = useAuth();
+  const { user, authReady } = useAuth();
+
+  if (!authReady) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-surface text-on-surface-variant">
+        Cargando sesión…
+      </div>
+    );
+  }
 
   if (!user) {
     return <Navigate to="/login" replace />;

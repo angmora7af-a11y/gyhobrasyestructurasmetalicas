@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 import { loginSchema, type LoginFormValues } from "@/features/auth/loginSchema";
+import { emailForUiRole } from "@/lib/seedTestUsers";
 import { ROLES } from "@/types/role";
 
 const roleLabels: Record<LoginFormValues["role"], string> = {
@@ -21,14 +22,15 @@ export function LoginForm() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [values, setValues] = useState<LoginFormValues>({
-    email: "",
+    email: emailForUiRole("admin"),
     password: "",
     role: "admin",
   });
   const [errors, setErrors] = useState<Partial<Record<keyof LoginFormValues, string>>>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSubmitError(null);
     const parsed = loginSchema.safeParse(values);
@@ -44,17 +46,26 @@ export function LoginForm() {
       return;
     }
     setErrors({});
-    login(parsed.data.email, parsed.data.password, parsed.data.role);
-    const home = parsed.data.role === "cliente" ? "/cliente" : "/admin";
-    navigate(home, { replace: true });
+    setSubmitting(true);
+    try {
+      const result = await login(parsed.data.email, parsed.data.password);
+      if (!result.ok) {
+        setSubmitError(result.message);
+        return;
+      }
+      const home = result.role === "cliente" ? "/cliente" : "/admin";
+      navigate(home, { replace: true });
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="glass-card mx-auto w-full max-w-md space-y-6 rounded-xl p-8 shadow-ambient">
+    <form onSubmit={(e) => void handleSubmit(e)} className="glass-card mx-auto w-full max-w-md space-y-6 rounded-xl p-8 shadow-ambient">
       <div>
         <h2 className="font-headline text-2xl font-black uppercase tracking-tighter text-on-surface">Acceso</h2>
         <p className="mt-1 text-sm font-medium text-on-surface-variant">
-          Credenciales se validarán contra la API (HU-002). Modo actual: sesión local de demostración.
+          Credenciales contra la API. El perfil efectivo lo define el servidor según los roles del usuario.
         </p>
       </div>
       <Input
@@ -77,19 +88,21 @@ export function LoginForm() {
       />
       <div>
         <label htmlFor="role" className="mb-1 block text-xs font-semibold uppercase tracking-wide text-on-surface-variant">
-          Rol (demo / pruebas HU-003)
+          Perfil de prueba (rellena correo seed)
         </label>
         <select
           id="role"
           name="role"
           className="w-full border-0 border-b-2 border-transparent bg-surface-variant px-3 py-2 text-sm focus:border-primary focus:bg-surface-container-lowest focus:outline-none"
           value={values.role}
-          onChange={(e) =>
+          onChange={(e) => {
+            const role = e.target.value as LoginFormValues["role"];
             setValues((v) => ({
               ...v,
-              role: e.target.value as LoginFormValues["role"],
-            }))
-          }
+              role,
+              email: emailForUiRole(role),
+            }));
+          }}
         >
           {ROLES.map((r) => (
             <option key={r} value={r}>
@@ -99,8 +112,8 @@ export function LoginForm() {
         </select>
       </div>
       {submitError ? <p className="text-sm text-error">{submitError}</p> : null}
-      <Button type="submit" className="w-full justify-center">
-        Ingresar
+      <Button type="submit" className="w-full justify-center" disabled={submitting}>
+        {submitting ? "Ingresando…" : "Ingresar"}
       </Button>
     </form>
   );

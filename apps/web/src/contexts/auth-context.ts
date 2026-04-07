@@ -7,10 +7,14 @@ export type AuthUser = {
   role: Role;
 };
 
+export type LoginResult = { ok: true; role: Role } | { ok: false; message: string };
+
 export type AuthContextValue = {
   user: AuthUser | null;
-  login: (email: string, _password: string, role: Role) => void;
-  logout: () => void;
+  /** false until the first /auth/me bootstrap finishes */
+  authReady: boolean;
+  login: (email: string, password: string) => Promise<LoginResult>;
+  logout: () => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextValue | null>(null);

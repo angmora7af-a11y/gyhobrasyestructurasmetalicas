@@ -46,7 +46,7 @@ export function Sidebar({ items }: Props) {
           <li>
             <button
               type="button"
-              onClick={logout}
+              onClick={() => void logout()}
               className="flex w-full items-center py-3 pl-5 font-headline text-xs font-bold uppercase tracking-tight text-stone-400 transition-colors hover:bg-stone-800/80 hover:text-stone-100"
             >
               <MaterialIcon name="logout" className="mr-3 text-sm" />

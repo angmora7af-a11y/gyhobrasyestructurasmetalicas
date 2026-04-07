@@ -63,8 +63,8 @@ export function KardexPage() {
     try {
       const params = new URLSearchParams();
       if (filters.nit) params.set("nit", filters.nit);
-      if (filters.product) params.set("product", filters.product);
-      if (filters.site) params.set("site", filters.site);
+      if (filters.product) params.set("product_id", filters.product);
+      if (filters.site) params.set("site_id", filters.site);
       if (filters.date_from) params.set("date_from", filters.date_from);
       if (filters.date_to) params.set("date_to", filters.date_to);
       setEntries(await api.get<KardexEntry[]>(`/reports/kardex?${params.toString()}`));
@@ -78,23 +78,22 @@ export function KardexPage() {
   async function exportReport(format: "excel" | "pdf") {
     const params = new URLSearchParams();
     if (filters.nit) params.set("nit", filters.nit);
-    if (filters.product) params.set("product", filters.product);
+    if (filters.product) params.set("product_id", filters.product);
+    if (filters.site) params.set("site_id", filters.site);
     if (filters.date_from) params.set("date_from", filters.date_from);
     if (filters.date_to) params.set("date_to", filters.date_to);
-    params.set("format", format);
-
-    const token = localStorage.getItem("gyh.auth.token");
-    const headers: Record<string, string> = {};
-    if (token) headers["Authorization"] = `Bearer ${token}`;
 
     try {
-      const res = await fetch(`/api/v1/reports/kardex/export?${params.toString()}`, { headers });
+      const res = await fetch(`/api/v1/reports/kardex?${params.toString()}`, {
+        credentials: "include",
+      });
       if (!res.ok) throw new Error("Error");
-      const blob = await res.blob();
+      const data = await res.json();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `kardex.${format === "excel" ? "xlsx" : "pdf"}`;
+      a.download = `kardex-${format}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();

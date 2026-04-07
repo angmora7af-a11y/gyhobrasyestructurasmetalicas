@@ -4,11 +4,12 @@ import secrets
 from datetime import datetime, timedelta, timezone
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.audit import log_audit
+from app.core.auth_cookie import ACCESS_TOKEN_COOKIE_NAME
 from app.core.config import settings
 from app.core.database import get_db
 from app.core.security import (
@@ -42,7 +43,11 @@ async def _get_user_roles(db: AsyncSession, user_id: UUID) -> list[str]:
 
 
 @router.post("/login", response_model=TokenResponse)
-async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)):
+async def login(
+    response: Response,
+    body: LoginRequest,
+    db: AsyncSession = Depends(get_db),
+):
     result = await db.execute(select(AppUser).where(AppUser.email == body.email))
     user = result.scalar_one_or_none()
 
@@ -82,11 +87,26 @@ async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)):
     )
     await db.commit()
 
+    max_age = settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60
+    response.set_cookie(
+        key=ACCESS_TOKEN_COOKIE_NAME,
+        value=access,
+        httponly=True,
+        max_age=max_age,
+        samesite="lax",
+        path="/",
+        secure=settings.ACCESS_TOKEN_COOKIE_SECURE,
+    )
+
     return TokenResponse(access_token=access, refresh_token=refresh)
 
 
 @router.post("/refresh", response_model=TokenResponse)
-async def refresh(refresh_token: str, db: AsyncSession = Depends(get_db)):
+async def refresh(
+    response: Response,
+    refresh_token: str,
+    db: AsyncSession = Depends(get_db),
+):
     try:
         payload = decode_token(refresh_token)
     except ValueError:
@@ -114,11 +134,23 @@ async def refresh(refresh_token: str, db: AsyncSession = Depends(get_db)):
     db.add(RefreshToken(user_id=user.id, token_hash=new_refresh, expires_at=new_refresh_expires))
     await db.commit()
 
+    max_age = settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60
+    response.set_cookie(
+        key=ACCESS_TOKEN_COOKIE_NAME,
+        value=new_access,
+        httponly=True,
+        max_age=max_age,
+        samesite="lax",
+        path="/",
+        secure=settings.ACCESS_TOKEN_COOKIE_SECURE,
+    )
+
     return TokenResponse(access_token=new_access, refresh_token=new_refresh)
 
 
 @router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
 async def logout(
+    response: Response,
     user: AppUser = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -135,6 +167,12 @@ async def logout(
         action="logout",
     )
     await db.commit()
+
+    response.delete_cookie(
+        ACCESS_TOKEN_COOKIE_NAME,
+        path="/",
+        samesite="lax",
+    )
 
 
 @router.post("/password-reset/request", status_code=status.HTTP_202_ACCEPTED)

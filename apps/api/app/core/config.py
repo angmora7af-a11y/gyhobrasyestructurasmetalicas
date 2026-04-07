@@ -24,5 +24,8 @@ class Settings(BaseSettings):
     MAX_LOGIN_ATTEMPTS: int = 5
     LOCKOUT_MINUTES: int = 15
 
+    # Set true behind HTTPS in production so the browser sends the cookie only on secure connections.
+    ACCESS_TOKEN_COOKIE_SECURE: bool = False
+
 
 settings = Settings()

@@ -12,7 +12,7 @@ from app.models.ar import SiigoInvoiceMirror
 from app.models.auth import AppUser
 from app.models.shipment import Shipment
 from app.models.ticket import Ticket
-from app.schemas.dashboard import DashboardKPI
+from app.schemas.dashboard import DashboardKPI, DashboardRecentTicket
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 
@@ -56,3 +56,23 @@ async def get_kpis(
         pending_invoices=pending_invoices,
         overdue_amount=overdue_amount,
     )
+
+
+@router.get("/recent-tickets", response_model=list[DashboardRecentTicket])
+async def recent_tickets(
+    db: AsyncSession = Depends(get_db),
+    _user: AppUser = Depends(require_role("admin")),
+):
+    result = await db.execute(
+        select(Ticket).order_by(Ticket.updated_at.desc()).limit(15)
+    )
+    rows = result.scalars().all()
+    return [
+        DashboardRecentTicket(
+            id=str(t.id),
+            reference=f"TKT-{str(t.id).replace('-', '')[:8].upper()}",
+            status=t.status,
+            updated_at=t.updated_at.isoformat(),
+        )
+        for t in rows
+    ]

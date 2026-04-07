@@ -19,6 +19,27 @@ type CreditApplication = {
   notes: string;
 };
 
+type ApiCreditApplication = {
+  id: string;
+  client_id: string;
+  status: string;
+  notes: string | null;
+  blocks_shipment: boolean;
+  created_at: string;
+};
+
+function mapCreditApplication(a: ApiCreditApplication): CreditApplication {
+  return {
+    id: a.id,
+    client_name: String(a.client_id),
+    nit: "—",
+    amount: 0,
+    status: a.status,
+    created_at: a.created_at,
+    notes: a.notes ?? "",
+  };
+}
+
 const statusTone: Record<string, "draft" | "pending" | "process" | "done"> = {
   in_review: "process",
   approved: "done",
@@ -65,7 +86,8 @@ export function CreditPage() {
     setLoading(true);
     setError(null);
     try {
-      setItems(await api.get<CreditApplication[]>("/credit"));
+      const raw = await api.get<ApiCreditApplication[]>("/credit-applications");
+      setItems(raw.map(mapCreditApplication));
     } catch (e) {
       setError(e instanceof ApiError ? e.message : "Error de conexión");
     } finally {

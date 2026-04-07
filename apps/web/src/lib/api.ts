@@ -1,4 +1,4 @@
-const BASE = "/api/v1";
+export const API_V1_BASE = "/api/v1";
 
 export class ApiError extends Error {
   constructor(
@@ -10,15 +10,17 @@ export class ApiError extends Error {
 }
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
-  const token = localStorage.getItem("gyh.auth.token");
   const extra = (options?.headers ?? {}) as Record<string, string>;
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     ...extra,
   };
-  if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const res = await fetch(`${BASE}${path}`, { ...options, headers });
+  const res = await fetch(`${API_V1_BASE}${path}`, {
+    ...options,
+    credentials: "include",
+    headers,
+  });
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -46,14 +48,16 @@ export const api = {
 
   delete: <T>(path: string) => request<T>(path, { method: "DELETE" }),
 
-  upload: <T>(path: string, formData: FormData) => {
-    const token = localStorage.getItem("gyh.auth.token");
-    const headers: Record<string, string> = {};
-    if (token) headers["Authorization"] = `Bearer ${token}`;
-    return fetch(`${BASE}${path}`, {
+  upload: async <T>(path: string, formData: FormData) => {
+    const res = await fetch(`${API_V1_BASE}${path}`, {
       method: "POST",
+      credentials: "include",
       body: formData,
-      headers,
-    }).then((r) => r.json()) as Promise<T>;
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new ApiError(res.status, (body as { detail?: string }).detail ?? "Error");
+    }
+    return res.json() as Promise<T>;
   },
 };

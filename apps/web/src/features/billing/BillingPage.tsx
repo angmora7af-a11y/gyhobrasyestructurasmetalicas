@@ -25,6 +25,22 @@ type BillingDraft = {
   lines: BillingLine[];
 };
 
+type ApiBillingDraftLine = {
+  product_id: string;
+  description: string | null;
+  quantity: number;
+  unit_price: number;
+};
+
+type ApiBillingDraft = {
+  id: string;
+  client_id: string;
+  period_start: string;
+  period_end: string;
+  status: string;
+  lines: ApiBillingDraftLine[];
+};
+
 const statusTone: Record<string, "draft" | "pending" | "process" | "done"> = {
   draft: "draft",
   pending: "pending",
@@ -69,7 +85,22 @@ export function BillingPage() {
     setLoading(true);
     setError(null);
     try {
-      setDrafts(await api.get<BillingDraft[]>("/billing/drafts"));
+      const raw = await api.get<ApiBillingDraft[]>("/billing-drafts");
+      setDrafts(
+        raw.map((d) => ({
+          id: d.id,
+          period: `${d.period_start} — ${d.period_end}`,
+          client_name: d.client_id,
+          status: d.status,
+          total: d.lines.reduce((s, l) => s + l.quantity * l.unit_price, 0),
+          lines: d.lines.map((l) => ({
+            description: l.description ?? "",
+            quantity: l.quantity,
+            unit_price: l.unit_price,
+            subtotal: l.quantity * l.unit_price,
+          })),
+        })),
+      );
     } catch (e) {
       setError(e instanceof ApiError ? e.message : "Error de conexión");
     } finally {
@@ -123,11 +154,11 @@ export function BillingPage() {
   }
 
   async function exportCsv() {
-    const token = localStorage.getItem("gyh.auth.token");
-    const headers: Record<string, string> = {};
-    if (token) headers["Authorization"] = `Bearer ${token}`;
     try {
-      const res = await fetch("/api/v1/billing/drafts/export", { headers });
+      const res = await fetch("/api/v1/billing-drafts/export", {
+        method: "POST",
+        credentials: "include",
+      });
       if (!res.ok) return;
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);

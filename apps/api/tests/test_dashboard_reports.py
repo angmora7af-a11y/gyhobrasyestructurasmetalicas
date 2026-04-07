@@ -19,6 +19,16 @@ class TestDashboard:
         assert "pending_invoices" in data
         assert "overdue_amount" in data
 
+    async def test_recent_tickets(self, client: AsyncClient):
+        token = await login_as(client, "admin")
+        resp = await client.get(
+            "/api/v1/dashboard/recent-tickets",
+            headers=auth_header(token),
+        )
+        assert resp.status_code == 200
+        data = resp.json()
+        assert isinstance(data, list)
+
 
 @pytest.mark.asyncio
 class TestReports:

@@ -12,10 +12,44 @@ type Invoice = {
   client_name: string;
   amount: number;
   paid_amount: number;
-  status: string;
+  status: "pending" | "partial" | "paid" | "overdue";
   due_date: string;
   is_overdue: boolean;
 };
+
+type ApiInvoice = {
+  id: string;
+  client_id: string;
+  siigo_document_number: string;
+  due_date: string;
+  total_amount: number;
+  balance_amount: number;
+  status: string;
+};
+
+function mapInvoiceRow(d: ApiInvoice): Invoice {
+  const total = Number(d.total_amount);
+  const balance = Number(d.balance_amount);
+  const paid = Math.max(0, total - balance);
+  const due = new Date(`${d.due_date}T12:00:00`);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const overdue = due < today && balance > 0;
+  let status: Invoice["status"] = "pending";
+  if (balance <= 0) status = "paid";
+  else if (overdue) status = "overdue";
+  else if (paid > 0 && balance > 0) status = "partial";
+  return {
+    id: d.id,
+    number: d.siigo_document_number,
+    client_name: String(d.client_id),
+    amount: total,
+    paid_amount: paid,
+    status,
+    due_date: d.due_date,
+    is_overdue: overdue,
+  };
+}
 
 const statusTone: Record<string, "draft" | "pending" | "process" | "done"> = {
   pending: "pending",
@@ -77,7 +111,8 @@ export function InvoicesPage() {
     setLoading(true);
     setError(null);
     try {
-      setInvoices(await api.get<Invoice[]>("/finance/invoices"));
+      const raw = await api.get<ApiInvoice[]>("/invoices");
+      setInvoices(raw.map(mapInvoiceRow));
     } catch (e) {
       setError(e instanceof ApiError ? e.message : "Error de conexión");
     } finally {
@@ -91,7 +126,7 @@ export function InvoicesPage() {
 
   async function sendReminder(invoiceId: string) {
     try {
-      await api.post(`/finance/invoices/${invoiceId}/reminder`);
+      await api.post(`/ar/reminders/${invoiceId}`);
     } catch {
       /* reminder failed */
     }

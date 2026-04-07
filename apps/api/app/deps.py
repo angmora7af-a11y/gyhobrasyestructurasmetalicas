@@ -2,20 +2,44 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.auth_cookie import ACCESS_TOKEN_COOKIE_NAME
 from app.core.database import get_db
 from app.core.security import decode_token
 from app.models.auth import AppUser, Role, UserRole
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(
+    tokenUrl="/api/v1/auth/login",
+    auto_error=False,
+)
+
+
+def _access_token_from_request(request: Request, bearer: str | None) -> str | None:
+    if bearer:
+        return bearer
+    return request.cookies.get(ACCESS_TOKEN_COOKIE_NAME)
+
+
+async def get_access_token(
+    request: Request,
+    bearer: str | None = Depends(oauth2_scheme),
+) -> str:
+    token = _access_token_from_request(request, bearer)
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return token
 
 
 async def get_current_user(
-    token: str = Depends(oauth2_scheme),
+    token: str = Depends(get_access_token),
     db: AsyncSession = Depends(get_db),
 ) -> AppUser:
     try:
@@ -51,11 +75,9 @@ async def get_current_user(
 
 def require_role(*allowed_roles: str):
     async def checker(
-        token: str = Depends(oauth2_scheme),
+        user: AppUser = Depends(get_current_user),
         db: AsyncSession = Depends(get_db),
     ) -> AppUser:
-        user = await get_current_user(token, db)
-
         result = await db.execute(
             select(Role.code)
             .join(UserRole, UserRole.role_id == Role.id)

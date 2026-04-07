@@ -25,7 +25,14 @@ import { SettingsPage } from "@/features/admin/SettingsPage";
 import { PasswordResetPage } from "@/features/auth/PasswordResetPage";
 
 function IndexRedirect() {
-  const { user } = useAuth();
+  const { user, authReady } = useAuth();
+  if (!authReady) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-surface-container-low text-on-surface-variant">
+        Cargando sesión…
+      </div>
+    );
+  }
   if (!user) return <Navigate to="/login" replace />;
   if (user.role === "cliente") return <Navigate to="/cliente" replace />;
   return <Navigate to="/admin" replace />;
